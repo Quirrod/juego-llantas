@@ -461,8 +461,8 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .cell.brick {
-      background: linear-gradient(145deg, #8B5A2B 0%, #8B4513 50%, #654321 100%);
-      border-color: #D2691E;
+      background: linear-gradient(145deg, #2a2a3a 0%, #1a1a2a 50%, #0a0a1a 100%);
+      border-color: #444;
     }
 
     .cell.key-aiqar {
@@ -492,11 +492,23 @@ const title = "Juego de Llantas - Gana un Auto!";
       justify-content: center;
       width: 100%;
       height: 100%;
+      pointer-events: none;
     }
 
-    .cell:not(.revealed) .cell-content {
-      color: #888;
-      text-shadow: 0 0 10px rgba(255,215,0,0.3);
+    .cell-hidden {
+      color: #FFD700;
+      font-size: clamp(1.5rem, 8vw, 4rem);
+      text-shadow: 0 0 15px rgba(255,215,0,0.5), 0 0 30px rgba(255,215,0,0.3);
+      animation: pulse-question 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-question {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .cell:not(.revealed) {
+      cursor: pointer;
     }
 
     .tire-cell {
@@ -509,55 +521,23 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .tire-image {
-      width: 85%;
-      height: 85%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
-        radial-gradient(circle, #222 25%, #111 30%, #333 35%, #1a1a1a 50%, #222 65%, #111 80%, #1a1a1a 100%);
-      border: 3px solid #444;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow:
-        inset 0 0 15px rgba(0,0,0,0.9),
-        0 4px 8px rgba(0,0,0,0.6),
-        0 0 0 2px #222;
-    }
-
-    .tire-image::before {
-      content: '';
-      position: absolute;
-      width: 40%;
-      height: 40%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 40% 40%, #aaa 0%, #888 30%, #666 60%, #444 100%);
-      border: 2px solid #555;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -2px 4px rgba(0,0,0,0.5);
+      width: 90%;
+      height: 90%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
     }
 
     .brand-logo {
       position: absolute;
-      font-size: clamp(0.35rem, 1.5vw, 0.7rem);
-      font-weight: bold;
-      padding: 3px 6px;
-      border-radius: 4px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50%;
+      height: auto;
+      max-height: 40%;
+      object-fit: contain;
       z-index: 5;
-      text-shadow: 1px 1px 2px #000;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .brand-logo.aiqar {
-      background: linear-gradient(135deg, #00BFFF 0%, #0080FF 100%);
-      color: #fff;
-      border: 1px solid #00DFFF;
-    }
-
-    .brand-logo.byd {
-      background: linear-gradient(135deg, #FF4500 0%, #CC0000 100%);
-      color: #fff;
-      border: 1px solid #FF6530;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.8));
     }
 
     .breick-cell {
@@ -566,16 +546,13 @@ const title = "Juego de Llantas - Gana un Auto!";
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-      gap: 2px;
     }
 
     .breick-logo {
-      font-size: clamp(0.3rem, 1.5vw, 0.6rem);
-      color: #FFD700;
-      text-shadow: 2px 2px 0 #8B4513, 1px 1px 3px #000;
-      font-weight: bold;
-      letter-spacing: 0.5px;
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
     }
 
     .cell .owner-dot {
@@ -1076,7 +1053,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         if (gameState.revealed[i]) {
           const type = gameState.board[i].split('-')[0];
           cell.classList.add('revealed', type === 'special' ? 'special' : gameState.board[i]);
-          cell.innerHTML = `<span class="cell-content">${getIcon(gameState.board[i])}</span>`;
+          cell.innerHTML = `<div class="cell-content">${getIcon(gameState.board[i])}</div>`;
 
           // Mostrar dueño
           if (gameState.cellOwners[i] !== null) {
@@ -1086,8 +1063,11 @@ const title = "Juego de Llantas - Gana un Auto!";
             cell.appendChild(dot);
           }
         } else {
-          cell.innerHTML = '<span class="cell-content">?</span>';
-          cell.addEventListener('click', () => revealCell(i));
+          cell.innerHTML = '<div class="cell-content cell-hidden">?</div>';
+          cell.addEventListener('click', (e) => {
+            e.preventDefault();
+            revealCell(i);
+          });
         }
 
         board.appendChild(cell);
@@ -1097,19 +1077,19 @@ const title = "Juego de Llantas - Gana un Auto!";
     function getIcon(type) {
       if (type === 'aiqar') {
         return `<div class="tire-cell">
-          <div class="tire-image"></div>
-          <span class="brand-logo aiqar">AIQAR</span>
+          <img src="/tire.png" alt="Llanta" class="tire-image">
+          <img src="/aiqar-logo.svg" alt="AIQAR" class="brand-logo">
         </div>`;
       }
       if (type === 'byd') {
         return `<div class="tire-cell">
-          <div class="tire-image"></div>
-          <span class="brand-logo byd">BYD</span>
+          <img src="/tire.png" alt="Llanta" class="tire-image">
+          <img src="/byd-logo.png" alt="BYD" class="brand-logo">
         </div>`;
       }
       if (type === 'brick') {
         return `<div class="breick-cell">
-          <span class="breick-logo">BREICK</span>
+          <img src="/breick-logo.png" alt="BREICK" class="breick-logo">
         </div>`;
       }
       if (type === 'key-aiqar') return '🔑';
