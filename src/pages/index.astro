@@ -1,0 +1,1294 @@
+---
+const title = "Juego de Llantas - Gana un Auto!";
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background: #1a1a2e;
+      min-height: 100vh;
+      color: #fff;
+      image-rendering: pixelated;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.5rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 0.5rem 0;
+      border-bottom: 4px solid #FFD700;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: clamp(0.6rem, 2.5vw, 1rem);
+      color: #FFD700;
+      text-shadow: 4px 4px 0px #FF6B00;
+    }
+
+    .setup-panel {
+      background: #16213e;
+      border: 4px solid #0f3460;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .setup-title {
+      text-align: center;
+      color: #FFD700;
+      font-size: 0.7rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 0px #FF6B00;
+    }
+
+    .mode-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .mode-btn {
+      padding: 0.8rem;
+      border: 4px solid #333;
+      background: #0f3460;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.1s;
+      text-align: left;
+    }
+
+    .mode-btn:hover {
+      border-color: #FFD700;
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px #FFD700;
+    }
+
+    .mode-btn.active {
+      border-color: #FFD700;
+      background: #1a4a7a;
+      box-shadow: 4px 4px 0px #FF6B00;
+    }
+
+    .mode-btn h3 {
+      color: #FFD700;
+      font-size: 0.6rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .mode-btn p {
+      font-size: 0.45rem;
+      opacity: 0.8;
+      line-height: 1.4;
+    }
+
+    .setup-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .setup-group {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .setup-group label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 0.5rem;
+      color: #FFD700;
+    }
+
+    .setup-group input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 4px solid #333;
+      background: #0a0a1a;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+    }
+
+    .setup-group input:focus {
+      outline: none;
+      border-color: #FFD700;
+    }
+
+    .prizes-preview {
+      background: #0a0a1a;
+      border: 4px solid #333;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .prizes-preview h4 {
+      color: #FFD700;
+      font-size: 0.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .prize-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .prize-item {
+      padding: 0.4rem 0.6rem;
+      border: 2px solid;
+      font-size: 0.4rem;
+      text-align: center;
+    }
+
+    .prize-item.aiqar { border-color: #00BFFF; color: #00BFFF; }
+    .prize-item.byd { border-color: #FF4500; color: #FF4500; }
+    .prize-item.vale { border-color: #00FF00; color: #00FF00; }
+
+    .btn-start {
+      width: 100%;
+      padding: 1rem;
+      background: #FFD700;
+      border: 4px solid #FF6B00;
+      color: #000;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+
+    .btn-start:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px #FF6B00;
+    }
+
+    .btn-start:active {
+      transform: translate(0, 0);
+      box-shadow: none;
+    }
+
+    .game-area {
+      display: none;
+    }
+
+    .game-area.active {
+      display: block;
+    }
+
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: #0a0a1a;
+      border: 4px solid #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .current-player {
+      font-size: 0.5rem;
+    }
+
+    .current-player span {
+      color: #FFD700;
+    }
+
+    .btn-restart {
+      padding: 0.5rem 1rem;
+      background: #FF4500;
+      border: 4px solid #cc3700;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.4rem;
+      cursor: pointer;
+    }
+
+    .players-panel {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .player-card {
+      padding: 0.4rem;
+      background: #16213e;
+      border: 4px solid #333;
+      text-align: center;
+      transition: all 0.1s;
+    }
+
+    .player-card.active {
+      border-color: #FFD700;
+      box-shadow: 0 0 10px #FFD700;
+    }
+
+    .player-card.winner-aiqar {
+      border-color: #00BFFF;
+      background: rgba(0, 191, 255, 0.2);
+    }
+
+    .player-card.winner-byd {
+      border-color: #FF4500;
+      background: rgba(255, 69, 0, 0.2);
+    }
+
+    .player-card.winner-vale {
+      border-color: #00FF00;
+      background: rgba(0, 255, 0, 0.2);
+    }
+
+    .player-name {
+      font-size: 0.4rem;
+      margin-bottom: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-stats {
+      font-size: 0.35rem;
+      line-height: 1.4;
+    }
+
+    .player-stats .aiqar { color: #00BFFF; }
+    .player-stats .byd { color: #FF4500; }
+    .player-stats .brick { color: #888; }
+
+    .player-prize {
+      font-size: 0.35rem;
+      margin-top: 0.2rem;
+      padding: 0.2rem;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .alert-box {
+      display: none;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border: 4px solid;
+      text-align: center;
+      font-size: 0.5rem;
+      animation: blink 0.5s infinite;
+    }
+
+    .alert-box.active {
+      display: block;
+    }
+
+    .alert-box.warning {
+      border-color: #FFD700;
+      background: rgba(255, 215, 0, 0.2);
+      color: #FFD700;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .board-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      overflow-x: auto;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 2px;
+      background: #000;
+      padding: 4px;
+      border: 4px solid #333;
+    }
+
+    .cell {
+      width: 40px;
+      height: 40px;
+      background: #2a2a4a;
+      border: 2px solid #444;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.1s;
+      position: relative;
+    }
+
+    .cell:hover:not(.revealed) {
+      background: #3a3a5a;
+      border-color: #FFD700;
+      transform: scale(1.1);
+      z-index: 10;
+    }
+
+    .cell.revealed {
+      cursor: default;
+      transform: none;
+    }
+
+    .cell.aiqar {
+      background: #006090;
+      border-color: #00BFFF;
+    }
+
+    .cell.byd {
+      background: #902000;
+      border-color: #FF4500;
+    }
+
+    .cell.brick {
+      background: #333;
+      border-color: #555;
+    }
+
+    .cell.key-aiqar {
+      background: #006040;
+      border-color: #00FF80;
+    }
+
+    .cell.key-byd {
+      background: #600060;
+      border-color: #FF00FF;
+    }
+
+    .cell.special {
+      background: #604000;
+      border-color: #FFD700;
+    }
+
+    .cell-content {
+      font-size: 1.4rem;
+      image-rendering: pixelated;
+    }
+
+    .cell .owner-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 0;
+      border: 1px solid #000;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: #0a0a1a;
+      border: 4px solid #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.35rem;
+    }
+
+    .legend-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid;
+      font-size: 0.8rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #16213e;
+      padding: 1.5rem;
+      border: 8px solid #FFD700;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h2 {
+      font-size: 0.8rem;
+      color: #FFD700;
+      margin-bottom: 1rem;
+      text-shadow: 4px 4px 0px #FF6B00;
+    }
+
+    .final-results {
+      margin: 1rem 0;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+      margin-bottom: 0.3rem;
+      border: 4px solid;
+      font-size: 0.4rem;
+    }
+
+    .result-item.pos-1 { border-color: #00BFFF; background: rgba(0, 191, 255, 0.2); }
+    .result-item.pos-2 { border-color: #FF4500; background: rgba(255, 69, 0, 0.2); }
+    .result-item.pos-3 { border-color: #00FF00; background: rgba(0, 255, 0, 0.2); }
+    .result-item.pos-4 { border-color: #00CC00; background: rgba(0, 204, 0, 0.2); }
+    .result-item.pos-5 { border-color: #009900; background: rgba(0, 153, 0, 0.2); }
+
+    .result-position {
+      font-size: 0.6rem;
+    }
+
+    .result-prize {
+      font-size: 0.5rem;
+      color: #FFD700;
+    }
+
+    .special-modal {
+      max-width: 400px;
+    }
+
+    .special-modal h3 {
+      color: #FFD700;
+      font-size: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .special-modal p {
+      font-size: 0.4rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .special-icon {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .choice-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .choice-btn {
+      padding: 0.5rem 1rem;
+      border: 4px solid #333;
+      background: #0f3460;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.4rem;
+      cursor: pointer;
+    }
+
+    .choice-btn:hover {
+      border-color: #FFD700;
+    }
+
+    .choice-btn.aiqar { border-color: #00BFFF; }
+    .choice-btn.byd { border-color: #FF4500; }
+
+    .skip-turn {
+      background: #333;
+      border-color: #666;
+      color: #999;
+    }
+
+    @media (max-width: 500px) {
+      .cell {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+      }
+
+      .cell-content {
+        font-size: 1rem;
+      }
+
+      .players-panel {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .player-card {
+        padding: 0.3rem;
+      }
+
+      .player-name {
+        font-size: 0.35rem;
+      }
+
+      .player-stats {
+        font-size: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏎️ JUEGO DE LLANTAS 🏎️</h1>
+    </header>
+
+    <!-- Panel de Configuracion -->
+    <div class="setup-panel" id="setup">
+      <div class="setup-title">CONFIGURACION</div>
+
+      <div class="mode-selector">
+        <div class="mode-btn active" data-mode="coleccion">
+          <h3>MODO 1: COLECCION</h3>
+          <p>Junta 4 llantas del mismo auto para ganarlo. Aiqar es mas facil, BYD mas dificil.</p>
+        </div>
+        <div class="mode-btn" data-mode="ultima">
+          <h3>MODO 2: ULTIMA PIEZA</h3>
+          <p>Encuentra la LLAVE de un auto para ganarlo. Hay llantas y una llave por auto.</p>
+        </div>
+        <div class="mode-btn" data-mode="caos">
+          <h3>MODO 3: CAOS</h3>
+          <p>Como Coleccion pero con casillas especiales: robar, bomba, comodin, intercambio y mas!</p>
+        </div>
+      </div>
+
+      <div class="prizes-preview">
+        <h4>🏆 PREMIOS 🏆</h4>
+        <div class="prize-list">
+          <div class="prize-item aiqar">1ro: AIQAR</div>
+          <div class="prize-item byd">2do: BYD</div>
+          <div class="prize-item vale">3ro: 10,000 Bs</div>
+          <div class="prize-item vale">4to: 8,000 Bs</div>
+          <div class="prize-item vale">5to: 6,000 Bs</div>
+        </div>
+      </div>
+
+      <div class="setup-row">
+        <div class="setup-group">
+          <label>JUGADOR 1</label>
+          <input type="text" class="player-name-input" value="Jugador 1">
+        </div>
+        <div class="setup-group">
+          <label>JUGADOR 2</label>
+          <input type="text" class="player-name-input" value="Jugador 2">
+        </div>
+        <div class="setup-group">
+          <label>JUGADOR 3</label>
+          <input type="text" class="player-name-input" value="Jugador 3">
+        </div>
+      </div>
+      <div class="setup-row">
+        <div class="setup-group">
+          <label>JUGADOR 4</label>
+          <input type="text" class="player-name-input" value="Jugador 4">
+        </div>
+        <div class="setup-group">
+          <label>JUGADOR 5</label>
+          <input type="text" class="player-name-input" value="Jugador 5">
+        </div>
+      </div>
+
+      <button class="btn-start" id="startGame">▶ INICIAR JUEGO</button>
+    </div>
+
+    <!-- Area de Juego -->
+    <div class="game-area" id="gameArea">
+      <div class="game-header">
+        <div class="current-player">TURNO: <span id="currentPlayerName">-</span></div>
+        <button class="btn-restart" onclick="resetGame()">REINICIAR</button>
+      </div>
+
+      <div class="alert-box" id="alertBox"></div>
+
+      <div class="players-panel" id="playersPanel"></div>
+
+      <div class="legend" id="legend">
+        <div class="legend-item">
+          <div class="legend-icon" style="background:#006090;border-color:#00BFFF;">🛞</div>
+          <span>AIQAR</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background:#902000;border-color:#FF4500;">🛞</div>
+          <span>BYD</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background:#333;border-color:#555;">🧱</div>
+          <span>VACIO</span>
+        </div>
+        <div class="legend-item legend-key" style="display:none;">
+          <div class="legend-icon" style="background:#006040;border-color:#00FF80;">🔑</div>
+          <span>LLAVE A</span>
+        </div>
+        <div class="legend-item legend-key" style="display:none;">
+          <div class="legend-icon" style="background:#600060;border-color:#FF00FF;">🔑</div>
+          <span>LLAVE B</span>
+        </div>
+        <div class="legend-item legend-special" style="display:none;">
+          <div class="legend-icon" style="background:#604000;border-color:#FFD700;">⭐</div>
+          <span>ESPECIAL</span>
+        </div>
+      </div>
+
+      <div class="board-container">
+        <div class="board" id="board"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Final -->
+  <div class="modal" id="finalModal">
+    <div class="modal-content">
+      <h2>🏆 RESULTADOS FINALES 🏆</h2>
+      <div class="final-results" id="finalResults"></div>
+      <button class="btn-start" onclick="resetGame()">JUGAR DE NUEVO</button>
+    </div>
+  </div>
+
+  <!-- Modal Especial -->
+  <div class="modal" id="specialModal">
+    <div class="modal-content special-modal">
+      <div class="special-icon" id="specialIcon"></div>
+      <h3 id="specialTitle"></h3>
+      <p id="specialDesc"></p>
+      <div class="choice-buttons" id="specialButtons"></div>
+    </div>
+  </div>
+
+  <!-- Modal Alerta -->
+  <div class="modal" id="alertModal">
+    <div class="modal-content special-modal">
+      <div class="special-icon" id="alertIcon"></div>
+      <h3 id="alertTitle"></h3>
+      <p id="alertDesc"></p>
+      <button class="btn-start" id="alertOk">OK</button>
+    </div>
+  </div>
+
+  <script>
+    // Colores de jugadores
+    const PLAYER_COLORS = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#95E1D3', '#DDA0DD'];
+
+    // Tipos especiales
+    const SPECIAL_TYPES = [
+      { id: 'doble', icon: '🔄', name: 'DOBLE TURNO', desc: 'Juegas otra vez!' },
+      { id: 'robar', icon: '🏴‍☠️', name: 'ROBAR', desc: 'Robas 1 llanta a un jugador al azar' },
+      { id: 'revelar2', icon: '👀', name: 'REVELAR 2', desc: 'Puedes abrir otra casilla' },
+      { id: 'bomba', icon: '💣', name: 'BOMBA', desc: 'Pierdes todas tus llantas de un tipo al azar' },
+      { id: 'comodin', icon: '🃏', name: 'COMODIN', desc: 'Cuenta como llanta del tipo que elijas' },
+      { id: 'intercambio', icon: '🔀', name: 'INTERCAMBIO', desc: 'Intercambias llantas con jugador al azar' },
+      { id: 'espejo', icon: '🪞', name: 'ESPEJO', desc: 'Copias las llantas de un jugador al azar' },
+      { id: 'bloqueo', icon: '🚫', name: 'BLOQUEO', desc: 'El siguiente jugador pierde su turno' }
+    ];
+
+    // Estado del juego
+    let gameState = {
+      mode: 'coleccion',
+      players: [],
+      currentPlayer: 0,
+      board: [],
+      revealed: [],
+      cellOwners: [],
+      gameOver: false,
+      aiqarWinner: null,
+      bydWinner: null,
+      skipNextPlayer: false,
+      extraTurn: false,
+      revealExtra: false
+    };
+
+    // Configuracion
+    const CONFIG = {
+      boardSize: 10,
+      aiqarTires: 16,
+      bydTires: 8,
+      specialCells: 12
+    };
+
+    // Inicializacion
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          gameState.mode = btn.dataset.mode;
+          updateLegend();
+        });
+      });
+
+      document.getElementById('startGame').addEventListener('click', startGame);
+      document.getElementById('alertOk').addEventListener('click', () => {
+        document.getElementById('alertModal').classList.remove('active');
+      });
+    });
+
+    function updateLegend() {
+      document.querySelectorAll('.legend-key').forEach(el => {
+        el.style.display = gameState.mode === 'ultima' ? 'flex' : 'none';
+      });
+      document.querySelectorAll('.legend-special').forEach(el => {
+        el.style.display = gameState.mode === 'caos' ? 'flex' : 'none';
+      });
+    }
+
+    function startGame() {
+      const nameInputs = document.querySelectorAll('.player-name-input');
+      gameState.players = Array.from(nameInputs).map((input, i) => ({
+        name: input.value || `Jugador ${i + 1}`,
+        aiqar: 0,
+        byd: 0,
+        bricks: 0,
+        prize: null,
+        protected: false,
+        color: PLAYER_COLORS[i]
+      }));
+
+      gameState.currentPlayer = 0;
+      gameState.gameOver = false;
+      gameState.aiqarWinner = null;
+      gameState.bydWinner = null;
+      gameState.skipNextPlayer = false;
+      gameState.extraTurn = false;
+      gameState.revealExtra = false;
+
+      generateBoard();
+
+      document.getElementById('setup').style.display = 'none';
+      document.getElementById('gameArea').classList.add('active');
+
+      updateLegend();
+      renderBoard();
+      renderPlayers();
+      updateCurrentPlayer();
+    }
+
+    function generateBoard() {
+      const totalCells = CONFIG.boardSize * CONFIG.boardSize;
+      let items = [];
+
+      // Llantas Aiqar
+      for (let i = 0; i < CONFIG.aiqarTires; i++) items.push('aiqar');
+
+      // Llantas BYD
+      for (let i = 0; i < CONFIG.bydTires; i++) items.push('byd');
+
+      // Llaves en modo ultima
+      if (gameState.mode === 'ultima') {
+        items.push('key-aiqar');
+        items.push('key-byd');
+      }
+
+      // Especiales en modo caos
+      if (gameState.mode === 'caos') {
+        for (let i = 0; i < CONFIG.specialCells; i++) {
+          const type = SPECIAL_TYPES[Math.floor(Math.random() * SPECIAL_TYPES.length)];
+          items.push('special-' + type.id);
+        }
+      }
+
+      // Rellenar con bricks
+      while (items.length < totalCells) items.push('brick');
+
+      // Mezclar
+      gameState.board = shuffleArray(items);
+      gameState.revealed = new Array(totalCells).fill(false);
+      gameState.cellOwners = new Array(totalCells).fill(null);
+    }
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function renderBoard() {
+      const board = document.getElementById('board');
+      board.innerHTML = '';
+
+      for (let i = 0; i < gameState.board.length; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.dataset.index = i;
+
+        if (gameState.revealed[i]) {
+          const type = gameState.board[i].split('-')[0];
+          cell.classList.add('revealed', type === 'special' ? 'special' : gameState.board[i]);
+          cell.innerHTML = `<span class="cell-content">${getIcon(gameState.board[i])}</span>`;
+
+          // Mostrar dueño
+          if (gameState.cellOwners[i] !== null) {
+            const dot = document.createElement('div');
+            dot.className = 'owner-dot';
+            dot.style.background = gameState.players[gameState.cellOwners[i]].color;
+            cell.appendChild(dot);
+          }
+        } else {
+          cell.innerHTML = '<span class="cell-content">?</span>';
+          cell.addEventListener('click', () => revealCell(i));
+        }
+
+        board.appendChild(cell);
+      }
+    }
+
+    function getIcon(type) {
+      if (type === 'aiqar') return '🛞';
+      if (type === 'byd') return '🛞';
+      if (type === 'brick') return '🧱';
+      if (type === 'key-aiqar') return '🔑';
+      if (type === 'key-byd') return '🔑';
+      if (type.startsWith('special-')) {
+        const specialId = type.replace('special-', '');
+        const special = SPECIAL_TYPES.find(s => s.id === specialId);
+        return special ? special.icon : '⭐';
+      }
+      return '?';
+    }
+
+    function revealCell(index) {
+      if (gameState.revealed[index] || gameState.gameOver) return;
+
+      gameState.revealed[index] = true;
+      gameState.cellOwners[index] = gameState.currentPlayer;
+
+      const item = gameState.board[index];
+      const player = gameState.players[gameState.currentPlayer];
+
+      // Procesar item
+      if (item === 'aiqar' || item === 'key-aiqar') {
+        player.aiqar++;
+        checkAiqarWin(player, item);
+      } else if (item === 'byd' || item === 'key-byd') {
+        player.byd++;
+        checkBydWin(player, item);
+      } else if (item === 'brick') {
+        player.bricks++;
+      } else if (item.startsWith('special-')) {
+        handleSpecial(item.replace('special-', ''), player);
+        return; // Special handles next turn
+      }
+
+      renderBoard();
+      renderPlayers();
+      checkAlerts();
+
+      if (!gameState.gameOver) {
+        if (gameState.revealExtra) {
+          gameState.revealExtra = false;
+          showAlert('👀', 'REVELAR 2', 'Elige otra casilla!');
+        } else if (gameState.extraTurn) {
+          gameState.extraTurn = false;
+          showAlert('🔄', 'DOBLE TURNO', 'Juegas otra vez!');
+        } else {
+          nextTurn();
+        }
+      }
+    }
+
+    function checkAiqarWin(player, item) {
+      if (gameState.aiqarWinner) return;
+
+      const wins = gameState.mode === 'ultima' ? item === 'key-aiqar' : player.aiqar >= 4;
+
+      if (wins) {
+        gameState.aiqarWinner = gameState.currentPlayer;
+        player.prize = 'AIQAR';
+        player.protected = true;
+        showAlert('🚗', 'GANADOR AIQAR!', `${player.name} gano el AIQAR!`);
+        checkGameEnd();
+      }
+    }
+
+    function checkBydWin(player, item) {
+      if (gameState.bydWinner) return;
+
+      const wins = gameState.mode === 'ultima' ? item === 'key-byd' : player.byd >= 4;
+
+      if (wins) {
+        gameState.bydWinner = gameState.currentPlayer;
+        player.prize = 'BYD';
+        player.protected = true;
+        showAlert('🚗', 'GANADOR BYD!', `${player.name} gano el BYD!`);
+        checkGameEnd();
+      }
+    }
+
+    function checkGameEnd() {
+      if (gameState.aiqarWinner !== null && gameState.bydWinner !== null) {
+        assignVales();
+        showFinalResults();
+      }
+    }
+
+    function assignVales() {
+      // Obtener jugadores sin premio
+      const remaining = gameState.players
+        .map((p, i) => ({ ...p, index: i }))
+        .filter(p => !p.protected);
+
+      // Ordenar por: mas llantas de un tipo, total llantas, bricks
+      remaining.sort((a, b) => {
+        const aMax = Math.max(a.aiqar, a.byd);
+        const bMax = Math.max(b.aiqar, b.byd);
+        if (bMax !== aMax) return bMax - aMax;
+
+        const aTotal = a.aiqar + a.byd;
+        const bTotal = b.aiqar + b.byd;
+        if (bTotal !== aTotal) return bTotal - aTotal;
+
+        return b.bricks - a.bricks;
+      });
+
+      // Asignar vales
+      const vales = ['10,000 Bs', '8,000 Bs', '6,000 Bs'];
+      remaining.forEach((p, i) => {
+        if (i < vales.length) {
+          gameState.players[p.index].prize = vales[i];
+        }
+      });
+
+      gameState.gameOver = true;
+    }
+
+    function showFinalResults() {
+      const results = document.getElementById('finalResults');
+      results.innerHTML = '';
+
+      // Ordenar por premio
+      const prizeOrder = ['AIQAR', 'BYD', '10,000 Bs', '8,000 Bs', '6,000 Bs'];
+      const sorted = [...gameState.players].sort((a, b) => {
+        return prizeOrder.indexOf(a.prize) - prizeOrder.indexOf(b.prize);
+      });
+
+      sorted.forEach((player, i) => {
+        const div = document.createElement('div');
+        div.className = `result-item pos-${i + 1}`;
+        div.innerHTML = `
+          <div>
+            <span class="result-position">#${i + 1}</span>
+            <span>${player.name}</span>
+          </div>
+          <div class="result-prize">${player.prize}</div>
+        `;
+        results.appendChild(div);
+      });
+
+      document.getElementById('finalModal').classList.add('active');
+    }
+
+    function handleSpecial(type, player) {
+      const special = SPECIAL_TYPES.find(s => s.id === type);
+
+      renderBoard();
+      renderPlayers();
+
+      switch (type) {
+        case 'doble':
+          gameState.extraTurn = true;
+          showAlert(special.icon, special.name, special.desc);
+          break;
+
+        case 'revelar2':
+          gameState.revealExtra = true;
+          showAlert(special.icon, special.name, special.desc);
+          break;
+
+        case 'robar':
+          executeRobar(player, special);
+          break;
+
+        case 'bomba':
+          executeBomba(player, special);
+          break;
+
+        case 'comodin':
+          showComodinChoice(player, special);
+          break;
+
+        case 'intercambio':
+          executeIntercambio(player, special);
+          break;
+
+        case 'espejo':
+          executeEspejo(player, special);
+          break;
+
+        case 'bloqueo':
+          gameState.skipNextPlayer = true;
+          showAlert(special.icon, special.name, 'El siguiente jugador perdera su turno!');
+          break;
+      }
+    }
+
+    function getValidTargets() {
+      return gameState.players
+        .map((p, i) => ({ ...p, index: i }))
+        .filter(p => !p.protected && p.index !== gameState.currentPlayer);
+    }
+
+    function executeRobar(player, special) {
+      const targets = getValidTargets().filter(p => p.aiqar > 0 || p.byd > 0);
+
+      if (targets.length === 0) {
+        showAlert(special.icon, special.name, 'No hay nadie a quien robar!');
+        nextTurn();
+        return;
+      }
+
+      const target = targets[Math.floor(Math.random() * targets.length)];
+      const targetPlayer = gameState.players[target.index];
+
+      // Elegir tipo al azar
+      const types = [];
+      if (targetPlayer.aiqar > 0) types.push('aiqar');
+      if (targetPlayer.byd > 0) types.push('byd');
+      const type = types[Math.floor(Math.random() * types.length)];
+
+      targetPlayer[type]--;
+      player[type]++;
+
+      renderPlayers();
+      showAlert(special.icon, special.name, `Robaste 1 llanta ${type.toUpperCase()} a ${targetPlayer.name}!`);
+
+      // Verificar si gano
+      if (type === 'aiqar') checkAiqarWin(player, 'aiqar');
+      else checkBydWin(player, 'byd');
+    }
+
+    function executeBomba(player, special) {
+      const types = [];
+      if (player.aiqar > 0) types.push('aiqar');
+      if (player.byd > 0) types.push('byd');
+
+      if (types.length === 0) {
+        showAlert(special.icon, special.name, 'No tenias llantas que perder!');
+        nextTurn();
+        return;
+      }
+
+      const type = types[Math.floor(Math.random() * types.length)];
+      const lost = player[type];
+      player[type] = 0;
+
+      renderPlayers();
+      showAlert(special.icon, special.name, `Perdiste ${lost} llantas ${type.toUpperCase()}!`);
+    }
+
+    function showComodinChoice(player, special) {
+      const modal = document.getElementById('specialModal');
+      document.getElementById('specialIcon').textContent = special.icon;
+      document.getElementById('specialTitle').textContent = special.name;
+      document.getElementById('specialDesc').textContent = 'Elige que tipo de llanta quieres:';
+
+      const buttons = document.getElementById('specialButtons');
+      buttons.innerHTML = `
+        <button class="choice-btn aiqar" onclick="applyComodin('aiqar')">🛞 AIQAR</button>
+        <button class="choice-btn byd" onclick="applyComodin('byd')">🛞 BYD</button>
+      `;
+
+      modal.classList.add('active');
+    }
+
+    window.applyComodin = function(type) {
+      document.getElementById('specialModal').classList.remove('active');
+      const player = gameState.players[gameState.currentPlayer];
+      player[type]++;
+
+      renderPlayers();
+
+      if (type === 'aiqar') checkAiqarWin(player, 'aiqar');
+      else checkBydWin(player, 'byd');
+
+      if (!gameState.gameOver) nextTurn();
+    };
+
+    function executeIntercambio(player, special) {
+      const targets = getValidTargets();
+
+      if (targets.length === 0) {
+        showAlert(special.icon, special.name, 'No hay con quien intercambiar!');
+        nextTurn();
+        return;
+      }
+
+      const target = targets[Math.floor(Math.random() * targets.length)];
+      const targetPlayer = gameState.players[target.index];
+
+      // Intercambiar
+      const tempAiqar = player.aiqar;
+      const tempByd = player.byd;
+      player.aiqar = targetPlayer.aiqar;
+      player.byd = targetPlayer.byd;
+      targetPlayer.aiqar = tempAiqar;
+      targetPlayer.byd = tempByd;
+
+      renderPlayers();
+      showAlert(special.icon, special.name, `Intercambiaste llantas con ${targetPlayer.name}!`);
+
+      // Verificar si alguien gano
+      checkAiqarWin(player, 'aiqar');
+      checkBydWin(player, 'byd');
+    }
+
+    function executeEspejo(player, special) {
+      const targets = getValidTargets();
+
+      if (targets.length === 0) {
+        showAlert(special.icon, special.name, 'No hay a quien copiar!');
+        nextTurn();
+        return;
+      }
+
+      const target = targets[Math.floor(Math.random() * targets.length)];
+      const targetPlayer = gameState.players[target.index];
+
+      player.aiqar = targetPlayer.aiqar;
+      player.byd = targetPlayer.byd;
+
+      renderPlayers();
+      showAlert(special.icon, special.name, `Copiaste las llantas de ${targetPlayer.name}!`);
+
+      checkAiqarWin(player, 'aiqar');
+      checkBydWin(player, 'byd');
+    }
+
+    function showAlert(icon, title, desc) {
+      document.getElementById('alertIcon').textContent = icon;
+      document.getElementById('alertTitle').textContent = title;
+      document.getElementById('alertDesc').textContent = desc;
+      document.getElementById('alertModal').classList.add('active');
+    }
+
+    function checkAlerts() {
+      const alertBox = document.getElementById('alertBox');
+
+      // Verificar si alguien esta cerca de ganar
+      const nearWin = gameState.players.find((p, i) => {
+        if (p.protected) return false;
+        if (gameState.aiqarWinner === null && p.aiqar === 3) return true;
+        if (gameState.bydWinner === null && p.byd === 3) return true;
+        return false;
+      });
+
+      if (nearWin && gameState.mode !== 'ultima') {
+        const type = nearWin.aiqar === 3 ? 'AIQAR' : 'BYD';
+        alertBox.textContent = `⚠️ ${nearWin.name} ESTA POR GANAR ${type}! ⚠️`;
+        alertBox.className = 'alert-box active warning';
+      } else {
+        alertBox.className = 'alert-box';
+      }
+    }
+
+    function nextTurn() {
+      if (gameState.gameOver) return;
+
+      gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
+
+      // Saltar si esta bloqueado
+      if (gameState.skipNextPlayer) {
+        gameState.skipNextPlayer = false;
+        showAlert('🚫', 'TURNO PERDIDO', `${gameState.players[gameState.currentPlayer].name} pierde su turno!`);
+        gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
+      }
+
+      // Saltar jugadores que ya ganaron
+      while (gameState.players[gameState.currentPlayer].protected) {
+        gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
+      }
+
+      updateCurrentPlayer();
+      renderPlayers();
+    }
+
+    function updateCurrentPlayer() {
+      document.getElementById('currentPlayerName').textContent =
+        gameState.players[gameState.currentPlayer].name;
+      document.getElementById('currentPlayerName').style.color =
+        gameState.players[gameState.currentPlayer].color;
+    }
+
+    function renderPlayers() {
+      const panel = document.getElementById('playersPanel');
+      panel.innerHTML = '';
+
+      gameState.players.forEach((player, i) => {
+        const card = document.createElement('div');
+        let cardClass = 'player-card';
+        if (i === gameState.currentPlayer && !player.protected) cardClass += ' active';
+        if (player.prize === 'AIQAR') cardClass += ' winner-aiqar';
+        else if (player.prize === 'BYD') cardClass += ' winner-byd';
+        else if (player.prize) cardClass += ' winner-vale';
+
+        card.className = cardClass;
+        card.style.borderLeftColor = player.color;
+        card.style.borderLeftWidth = '6px';
+
+        card.innerHTML = `
+          <div class="player-name">${player.name}</div>
+          <div class="player-stats">
+            <span class="aiqar">A:${player.aiqar}</span>
+            <span class="byd">B:${player.byd}</span>
+            <span class="brick">🧱${player.bricks}</span>
+          </div>
+          ${player.prize ? `<div class="player-prize">${player.prize}</div>` : ''}
+        `;
+        panel.appendChild(card);
+      });
+    }
+
+    function resetGame() {
+      document.getElementById('finalModal').classList.remove('active');
+      document.getElementById('specialModal').classList.remove('active');
+      document.getElementById('alertModal').classList.remove('active');
+      document.getElementById('gameArea').classList.remove('active');
+      document.getElementById('setup').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
