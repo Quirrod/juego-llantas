@@ -167,6 +167,37 @@ const title = "Juego de Llantas - Gana un Auto!";
     .prize-item.byd { border-color: #FF4500; color: #FF4500; }
     .prize-item.vale { border-color: #00FF00; color: #00FF00; }
 
+    .players-preview {
+      background: #0a0a1a;
+      border: 4px solid #333;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .players-preview h4 {
+      color: #FFD700;
+      font-size: 0.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .color-list {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .color-item {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+      border: 4px solid #000;
+    }
+
     .btn-start {
       width: 100%;
       padding: 1rem;
@@ -262,12 +293,12 @@ const title = "Juego de Llantas - Gana un Auto!";
       background: rgba(0, 255, 0, 0.2);
     }
 
-    .player-name {
-      font-size: 0.4rem;
+    .player-number {
+      font-size: 1rem;
+      padding: 0.3rem;
       margin-bottom: 0.2rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      color: #000;
+      font-weight: bold;
     }
 
     .player-stats {
@@ -491,6 +522,17 @@ const title = "Juego de Llantas - Gana un Auto!";
       color: #FFD700;
     }
 
+    .result-color {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      color: #000;
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
     .special-modal {
       max-width: 400px;
     }
@@ -561,8 +603,8 @@ const title = "Juego de Llantas - Gana un Auto!";
         padding: 0.3rem;
       }
 
-      .player-name {
-        font-size: 0.35rem;
+      .player-number {
+        font-size: 0.8rem;
       }
 
       .player-stats {
@@ -607,28 +649,14 @@ const title = "Juego de Llantas - Gana un Auto!";
         </div>
       </div>
 
-      <div class="setup-row">
-        <div class="setup-group">
-          <label>JUGADOR 1</label>
-          <input type="text" class="player-name-input" value="Jugador 1">
-        </div>
-        <div class="setup-group">
-          <label>JUGADOR 2</label>
-          <input type="text" class="player-name-input" value="Jugador 2">
-        </div>
-        <div class="setup-group">
-          <label>JUGADOR 3</label>
-          <input type="text" class="player-name-input" value="Jugador 3">
-        </div>
-      </div>
-      <div class="setup-row">
-        <div class="setup-group">
-          <label>JUGADOR 4</label>
-          <input type="text" class="player-name-input" value="Jugador 4">
-        </div>
-        <div class="setup-group">
-          <label>JUGADOR 5</label>
-          <input type="text" class="player-name-input" value="Jugador 5">
+      <div class="players-preview">
+        <h4>JUGADORES</h4>
+        <div class="color-list">
+          <div class="color-item" style="background: #FF6B6B;">1</div>
+          <div class="color-item" style="background: #4ECDC4;">2</div>
+          <div class="color-item" style="background: #FFE66D; color: #000;">3</div>
+          <div class="color-item" style="background: #95E1D3;">4</div>
+          <div class="color-item" style="background: #DDA0DD;">5</div>
         </div>
       </div>
 
@@ -775,15 +803,14 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     function startGame() {
-      const nameInputs = document.querySelectorAll('.player-name-input');
-      gameState.players = Array.from(nameInputs).map((input, i) => ({
-        name: input.value || `Jugador ${i + 1}`,
+      gameState.players = PLAYER_COLORS.map((color, i) => ({
+        number: i + 1,
         aiqar: 0,
         byd: 0,
         bricks: 0,
         prize: null,
         protected: false,
-        color: PLAYER_COLORS[i]
+        color: color
       }));
 
       gameState.currentPlayer = 0;
@@ -940,7 +967,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         gameState.aiqarWinner = gameState.currentPlayer;
         player.prize = 'AIQAR';
         player.protected = true;
-        showAlert('🚗', 'GANADOR AIQAR!', `${player.name} gano el AIQAR!`);
+        showAlert('🚗', 'GANADOR AIQAR!', `Jugador ${player.number} gano el AIQAR!`);
         checkGameEnd();
       }
     }
@@ -954,7 +981,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         gameState.bydWinner = gameState.currentPlayer;
         player.prize = 'BYD';
         player.protected = true;
-        showAlert('🚗', 'GANADOR BYD!', `${player.name} gano el BYD!`);
+        showAlert('🚗', 'GANADOR BYD!', `Jugador ${player.number} gano el BYD!`);
         checkGameEnd();
       }
     }
@@ -1012,7 +1039,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         div.innerHTML = `
           <div>
             <span class="result-position">#${i + 1}</span>
-            <span>${player.name}</span>
+            <span class="result-color" style="background:${player.color};">${player.number}</span>
           </div>
           <div class="result-prize">${player.prize}</div>
         `;
@@ -1094,7 +1121,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       player[type]++;
 
       renderPlayers();
-      showAlert(special.icon, special.name, `Robaste 1 llanta ${type.toUpperCase()} a ${targetPlayer.name}!`);
+      showAlert(special.icon, special.name, `Robaste 1 llanta ${type.toUpperCase()} al Jugador ${targetPlayer.number}!`);
 
       // Verificar si gano
       if (type === 'aiqar') checkAiqarWin(player, 'aiqar');
@@ -1169,7 +1196,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       targetPlayer.byd = tempByd;
 
       renderPlayers();
-      showAlert(special.icon, special.name, `Intercambiaste llantas con ${targetPlayer.name}!`);
+      showAlert(special.icon, special.name, `Intercambiaste llantas con Jugador ${targetPlayer.number}!`);
 
       // Verificar si alguien gano
       checkAiqarWin(player, 'aiqar');
@@ -1192,7 +1219,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       player.byd = targetPlayer.byd;
 
       renderPlayers();
-      showAlert(special.icon, special.name, `Copiaste las llantas de ${targetPlayer.name}!`);
+      showAlert(special.icon, special.name, `Copiaste las llantas del Jugador ${targetPlayer.number}!`);
 
       checkAiqarWin(player, 'aiqar');
       checkBydWin(player, 'byd');
@@ -1218,7 +1245,7 @@ const title = "Juego de Llantas - Gana un Auto!";
 
       if (nearWin && gameState.mode !== 'ultima') {
         const type = nearWin.aiqar === 3 ? 'AIQAR' : 'BYD';
-        alertBox.textContent = `⚠️ ${nearWin.name} ESTA POR GANAR ${type}! ⚠️`;
+        alertBox.textContent = `⚠️ JUGADOR ${nearWin.number} ESTA POR GANAR ${type}! ⚠️`;
         alertBox.className = 'alert-box active warning';
       } else {
         alertBox.className = 'alert-box';
@@ -1233,7 +1260,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       // Saltar si esta bloqueado
       if (gameState.skipNextPlayer) {
         gameState.skipNextPlayer = false;
-        showAlert('🚫', 'TURNO PERDIDO', `${gameState.players[gameState.currentPlayer].name} pierde su turno!`);
+        showAlert('🚫', 'TURNO PERDIDO', `Jugador ${gameState.players[gameState.currentPlayer].number} pierde su turno!`);
         gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
       }
 
@@ -1247,8 +1274,7 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     function updateCurrentPlayer() {
-      document.getElementById('currentPlayerName').textContent =
-        gameState.players[gameState.currentPlayer].name;
+      document.getElementById('currentPlayerName').textContent = gameState.players[gameState.currentPlayer].number;
       document.getElementById('currentPlayerName').style.color =
         gameState.players[gameState.currentPlayer].color;
     }
@@ -1270,7 +1296,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         card.style.borderLeftWidth = '6px';
 
         card.innerHTML = `
-          <div class="player-name">${player.name}</div>
+          <div class="player-number" style="background:${player.color};">${player.number}</div>
           <div class="player-stats">
             <span class="aiqar">A:${player.aiqar}</span>
             <span class="byd">B:${player.byd}</span>
