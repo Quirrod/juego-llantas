@@ -189,11 +189,21 @@ const title = "Juego de Llantas - Gana un Auto!";
       border: 2px solid;
       font-size: 0.4rem;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
     }
 
     .prize-item.aiqar { border-color: #00BFFF; color: #00BFFF; }
     .prize-item.byd { border-color: #FF4500; color: #FF4500; }
     .prize-item.vale { border-color: #00FF00; color: #00FF00; }
+
+    .prize-item .prize-car {
+      width: 70px;
+      height: 50px;
+      object-fit: contain;
+    }
 
     .players-preview {
       background: var(--breick-purple-dark);
@@ -559,10 +569,11 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .player-stats img {
-      width: 22px !important;
-      height: 14px !important;
-      max-width: 22px !important;
-      max-height: 14px !important;
+      width: 20px !important;
+      height: 20px !important;
+      max-width: 20px !important;
+      max-height: 20px !important;
+      object-fit: contain;
     }
 
     .stat-row {
@@ -575,12 +586,12 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .stat-row .stat-logo {
-      width: 14px !important;
-      height: 10px !important;
-      max-width: 14px !important;
-      max-height: 10px !important;
-      min-width: 14px;
-      min-height: 10px;
+      width: 16px !important;
+      height: 16px !important;
+      max-width: 16px !important;
+      max-height: 16px !important;
+      min-width: 16px;
+      min-height: 16px;
       object-fit: contain;
       flex-shrink: 0;
       display: block;
@@ -820,11 +831,11 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .aiqar-badge {
-      background-image: url('/aiqar-logo.svg');
+      background-image: url('/aiqar-tire.png');
     }
 
     .byd-badge {
-      background-image: url('/byd-logo.png');
+      background-image: url('/byd-tire.png');
     }
 
     .key-icon {
@@ -856,11 +867,11 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .key-icon .key-logo.aiqar-key {
-      background-image: url('/aiqar-logo.svg');
+      background-image: url('/aiqar-tire.png');
     }
 
     .key-icon .key-logo.byd-key {
-      background-image: url('/byd-logo.png');
+      background-image: url('/byd-tire.png');
     }
 
 
@@ -975,22 +986,36 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .choice-btn {
-      padding: 2rem 2.5rem;
+      padding: 1.5rem 2rem;
       border: 6px solid var(--breick-purple-light);
       background: var(--breick-purple-dark);
       color: #fff;
       font-family: 'Press Start 2P', cursive;
-      font-size: 1.8rem;
+      font-size: 1.3rem;
       cursor: pointer;
       width: 100%;
-      min-height: 120px;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
     }
 
     .choice-btn img {
-      width: 60px !important;
-      height: 40px !important;
+      object-fit: contain;
       vertical-align: middle;
-      margin-right: 10px;
+    }
+
+    .choice-btn .player-tires {
+      display: flex;
+      gap: 0.8rem;
+      font-size: 1rem;
+      align-items: center;
+    }
+
+    .choice-btn .player-tires img {
+      width: 30px !important;
+      height: 20px !important;
     }
 
     .choice-btn:hover {
@@ -1135,8 +1160,8 @@ const title = "Juego de Llantas - Gana un Auto!";
       <div class="prizes-preview">
         <h4>🏆 TODOS GANAN 🏆</h4>
         <div class="prize-list">
-          <div class="prize-item aiqar">🚗 AIQAR</div>
-          <div class="prize-item byd">🚗 BYD</div>
+          <div class="prize-item aiqar"><img class="prize-car" src="/aiqar-car.png" alt="AIQAR"> AIQAR</div>
+          <div class="prize-item byd"><img class="prize-car" src="/byd-car.png" alt="BYD"> BYD</div>
           <div class="prize-item vale">💰 10,000 Bs</div>
           <div class="prize-item vale">💰 8,000 Bs</div>
           <div class="prize-item vale">💰 6,000 Bs</div>
@@ -1266,12 +1291,12 @@ const title = "Juego de Llantas - Gana un Auto!";
     // Tipos especiales
     const SPECIAL_TYPES = [
       { id: 'doble', icon: '🔄', name: 'DOBLE TURNO', desc: 'Juegas otra vez!' },
-      { id: 'robar', icon: '🏴‍☠️', name: 'ROBAR', desc: 'Robas 1 llanta a un jugador al azar' },
+      { id: 'robar', icon: '🏴‍☠️', name: 'ROBAR', desc: 'Robas 1 llanta a otro jugador' },
       { id: 'revelar2', icon: '👀', name: 'REVELAR 2', desc: 'Puedes abrir otra casilla' },
       { id: 'bomba', icon: '💣', name: 'BOMBA', desc: 'Pierdes todas tus llantas de un tipo al azar' },
       { id: 'comodin', icon: '🃏', name: 'COMODIN', desc: 'Cuenta como llanta del tipo que elijas' },
-      { id: 'intercambio', icon: '🔀', name: 'INTERCAMBIO', desc: 'Intercambias llantas con jugador al azar' },
-      { id: 'espejo', icon: '🪞', name: 'ESPEJO', desc: 'Copias las llantas de un jugador al azar' },
+      { id: 'intercambio', icon: '🔀', name: 'INTERCAMBIO', desc: 'Intercambias llantas con otro jugador' },
+      { id: 'espejo', icon: '🪞', name: 'ESPEJO', desc: 'Copias las llantas de otro jugador' },
       { id: 'bloqueo', icon: '🚫', name: 'BLOQUEO', desc: 'El siguiente jugador pierde su turno' }
     ];
 
@@ -1648,11 +1673,9 @@ const title = "Juego de Llantas - Gana un Auto!";
       cell.style.backgroundRepeat = 'no-repeat';
 
       if (type === 'aiqar' || type === 'byd') {
-        // Llanta con logo del auto encima
-        cell.style.background = `url(/tire.png) center/70% no-repeat`;
-        // Logo pequeño centrado usando img
+        // Llanta nueva con marca del auto integrada
         const logo = document.createElement('img');
-        logo.src = type === 'aiqar' ? '/aiqar-logo.svg' : '/byd-logo.png';
+        logo.src = type === 'aiqar' ? '/aiqar-tire.png' : '/byd-tire.png';
         logo.style.cssText = 'width:100%;height:100%;object-fit:contain;pointer-events:none;';
         cell.appendChild(logo);
       } else if (type === 'brick') {
@@ -1662,7 +1685,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         cell.appendChild(logo);
       } else if (type === 'key-aiqar' || type === 'key-byd') {
         // Llave con logo del auto
-        const logoUrl = type === 'key-aiqar' ? '/aiqar-logo.svg' : '/byd-logo.png';
+        const logoUrl = type === 'key-aiqar' ? '/aiqar-tire.png' : '/byd-tire.png';
         cell.innerHTML = `
           <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
             <span style="font-size:clamp(16px,6vw,32px);line-height:1;filter:drop-shadow(1px 1px 2px rgba(0,0,0,0.5));">🔑</span>
@@ -1672,7 +1695,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       } else if (type.startsWith('special-')) {
         const specialId = type.replace('special-', '');
         const special = SPECIAL_TYPES.find(s => s.id === specialId);
-        cell.innerHTML = '<span style="font-size:clamp(12px, 4vw, 24px);display:flex;align-items:center;justify-content:center;width:100%;height:100%;">' + (special ? special.icon : '⭐') + '</span>';
+        cell.innerHTML = '<span style="font-size:clamp(28px, 9vw, 56px);line-height:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">' + (special ? special.icon : '⭐') + '</span>';
       }
     }
 
@@ -1789,7 +1812,7 @@ const title = "Juego de Llantas - Gana un Auto!";
           gameState.aiqarWinner = gameState.currentPlayer;
           player.prize = 'AIQAR';
           player.protected = true;
-          showAlert('🚗', 'GANADOR AIQAR!', `Jugador ${player.number} encontro la ultima pieza y gano AIQAR!`);
+          showAlert('/aiqar-car.png', 'GANADOR AIQAR!', `Jugador ${player.number} encontro la ultima pieza y gano AIQAR!`);
           checkGameEnd();
         }
       } else {
@@ -1798,7 +1821,7 @@ const title = "Juego de Llantas - Gana un Auto!";
           gameState.aiqarWinner = gameState.currentPlayer;
           player.prize = 'AIQAR';
           player.protected = true;
-          showAlert('🚗', 'GANADOR AIQAR!', `Jugador ${player.number} gano el AIQAR!`);
+          showAlert('/aiqar-car.png', 'GANADOR AIQAR!', `Jugador ${player.number} gano el AIQAR!`);
           checkGameEnd();
         }
       }
@@ -1813,7 +1836,7 @@ const title = "Juego de Llantas - Gana un Auto!";
           gameState.bydWinner = gameState.currentPlayer;
           player.prize = 'BYD';
           player.protected = true;
-          showAlert('🚗', 'GANADOR BYD!', `Jugador ${player.number} encontro la ultima pieza y gano BYD!`);
+          showAlert('/byd-car.png', 'GANADOR BYD!', `Jugador ${player.number} encontro la ultima pieza y gano BYD!`);
           checkGameEnd();
         }
       } else {
@@ -1822,7 +1845,7 @@ const title = "Juego de Llantas - Gana un Auto!";
           gameState.bydWinner = gameState.currentPlayer;
           player.prize = 'BYD';
           player.protected = true;
-          showAlert('🚗', 'GANADOR BYD!', `Jugador ${player.number} gano el BYD!`);
+          showAlert('/byd-car.png', 'GANADOR BYD!', `Jugador ${player.number} gano el BYD!`);
           checkGameEnd();
         }
       }
@@ -1879,12 +1902,20 @@ const title = "Juego de Llantas - Gana un Auto!";
       sorted.forEach((player, i) => {
         const div = document.createElement('div');
         div.className = `result-item pos-${i + 1}`;
+        let prizeHtml = '';
+        if (player.prize === 'AIQAR') {
+          prizeHtml = `<img src="/aiqar-car.png" alt="AIQAR" style="width:60px;height:42px;object-fit:contain;vertical-align:middle;"> AIQAR`;
+        } else if (player.prize === 'BYD') {
+          prizeHtml = `<img src="/byd-car.png" alt="BYD" style="width:60px;height:42px;object-fit:contain;vertical-align:middle;"> BYD`;
+        } else {
+          prizeHtml = player.prize;
+        }
         div.innerHTML = `
           <div>
             <span class="result-position">#${i + 1}</span>
             <span class="result-color" style="background:${player.color};">${player.number}</span>
           </div>
-          <div class="result-prize">${player.prize}</div>
+          <div class="result-prize">${prizeHtml}</div>
         `;
         results.appendChild(div);
       });
@@ -1955,15 +1986,15 @@ const title = "Juego de Llantas - Gana un Auto!";
       const modal = document.getElementById('specialModal');
       document.getElementById('specialIcon').textContent = special.icon;
       document.getElementById('specialTitle').textContent = special.name;
-      document.getElementById('specialDesc').textContent = 'Elige a quien robar:';
+      document.getElementById('specialDesc').textContent = 'Elige a quien robarle 1 llanta:';
 
       const buttons = document.getElementById('specialButtons');
       buttons.innerHTML = targets.map(t => `
         <button class="choice-btn" style="background:${t.color};" onclick="selectRobarTarget(${t.index})">
           Jugador ${t.number}
-          <span style="font-size:0.7em;display:block;">
-            ${t.aiqar > 0 ? `<img src="/aiqar-logo.svg" style="width:16px;height:10px;"> ${t.aiqar}` : ''}
-            ${t.byd > 0 ? `<img src="/byd-logo.png" style="width:16px;height:10px;"> ${t.byd}` : ''}
+          <span class="player-tires">
+            ${t.aiqar > 0 ? `<img src="/aiqar-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.aiqar}` : ''}
+            ${t.byd > 0 ? `<img src="/byd-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.byd}` : ''}
           </span>
         </button>
       `).join('');
@@ -1984,14 +2015,14 @@ const title = "Juego de Llantas - Gana un Auto!";
       }
 
       // Mostrar selección de tipo de llanta
-      document.getElementById('specialDesc').textContent = `Que llanta robar al Jugador ${targetPlayer.number}?`;
+      document.getElementById('specialDesc').textContent = `Que llanta robarle al Jugador ${targetPlayer.number}?`;
       const buttons = document.getElementById('specialButtons');
       buttons.innerHTML = `
         <button class="choice-btn aiqar" onclick="applyRobar(${targetIndex}, 'aiqar')">
-          <img src="/aiqar-logo.svg" style="width:30px;height:20px;vertical-align:middle;"> AIQAR (${targetPlayer.aiqar})
+          <img src="/aiqar-tire.png" style="width:48px;height:48px;object-fit:contain;vertical-align:middle;"> AIQAR (${targetPlayer.aiqar})
         </button>
         <button class="choice-btn byd" onclick="applyRobar(${targetIndex}, 'byd')">
-          <img src="/byd-logo.png" style="width:30px;height:20px;vertical-align:middle;"> BYD (${targetPlayer.byd})
+          <img src="/byd-tire.png" style="width:48px;height:48px;object-fit:contain;vertical-align:middle;"> BYD (${targetPlayer.byd})
         </button>
       `;
     };
@@ -2042,8 +2073,8 @@ const title = "Juego de Llantas - Gana un Auto!";
 
       const buttons = document.getElementById('specialButtons');
       buttons.innerHTML = `
-        <button class="choice-btn aiqar" onclick="applyComodin('aiqar')"><img src="/aiqar-logo.svg" style="width:30px;height:20px;vertical-align:middle;"> AIQAR</button>
-        <button class="choice-btn byd" onclick="applyComodin('byd')"><img src="/byd-logo.png" style="width:30px;height:20px;vertical-align:middle;"> BYD</button>
+        <button class="choice-btn aiqar" onclick="applyComodin('aiqar')"><img src="/aiqar-tire.png" style="width:48px;height:48px;object-fit:contain;vertical-align:middle;"> AIQAR</button>
+        <button class="choice-btn byd" onclick="applyComodin('byd')"><img src="/byd-tire.png" style="width:48px;height:48px;object-fit:contain;vertical-align:middle;"> BYD</button>
       `;
 
       modal.classList.add('active');
@@ -2070,22 +2101,30 @@ const title = "Juego de Llantas - Gana un Auto!";
         return;
       }
 
-      // AMAÑADO: Si el jugador va perdiendo, intercambiar con el líder
-      const playerTotal = player.aiqar + player.byd;
-      const avgTotal = gameState.players.reduce((sum, p) => sum + p.aiqar + p.byd, 0) / gameState.players.length;
+      // Mostrar modal para elegir con quién intercambiar
+      const modal = document.getElementById('specialModal');
+      document.getElementById('specialIcon').textContent = special.icon;
+      document.getElementById('specialTitle').textContent = special.name;
+      document.getElementById('specialDesc').textContent = 'Elige con quien intercambiar:';
 
-      let target;
-      if (playerTotal < avgTotal && Math.random() < 0.8) {
-        // Jugador va perdiendo: intercambiar con el líder
-        target = targets.reduce((leader, p) => {
-          const pTotal = p.aiqar + p.byd;
-          const leaderTotal = leader.aiqar + leader.byd;
-          return pTotal > leaderTotal ? p : leader;
-        }, targets[0]);
-      } else {
-        target = targets[Math.floor(Math.random() * targets.length)];
-      }
-      const targetPlayer = gameState.players[target.index];
+      const buttons = document.getElementById('specialButtons');
+      buttons.innerHTML = targets.map(t => `
+        <button class="choice-btn" style="background:${t.color};" onclick="applyIntercambio(${t.index})">
+          Jugador ${t.number}
+          <span class="player-tires">
+            ${t.aiqar > 0 ? `<img src="/aiqar-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.aiqar}` : ''}
+            ${t.byd > 0 ? `<img src="/byd-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.byd}` : ''}
+          </span>
+        </button>
+      `).join('');
+
+      modal.classList.add('active');
+    }
+
+    window.applyIntercambio = function(targetIndex) {
+      document.getElementById('specialModal').classList.remove('active');
+      const player = gameState.players[gameState.currentPlayer];
+      const targetPlayer = gameState.players[targetIndex];
 
       // Intercambiar
       const tempAiqar = player.aiqar;
@@ -2096,15 +2135,16 @@ const title = "Juego de Llantas - Gana un Auto!";
       targetPlayer.byd = tempByd;
 
       renderPlayers();
+      saveGameState();
 
       // Verificar si alguien gano
       checkAiqarWin(player, 'aiqar');
       checkBydWin(player, 'byd');
 
-      showAlert(special.icon, special.name, `Intercambiaste llantas con Jugador ${targetPlayer.number}!`, () => {
+      showAlert('🔀', 'INTERCAMBIO', `Intercambiaste llantas con Jugador ${targetPlayer.number}!`, () => {
         if (!gameState.gameOver) nextTurn();
       });
-    }
+    };
 
     function executeEspejo(player, special) {
       const targets = getValidTargets();
@@ -2114,36 +2154,54 @@ const title = "Juego de Llantas - Gana un Auto!";
         return;
       }
 
-      // AMAÑADO: Siempre copiar al líder para igualar el juego
-      let target;
-      if (Math.random() < 0.85) {
-        target = targets.reduce((leader, p) => {
-          const pTotal = p.aiqar + p.byd;
-          const leaderTotal = leader.aiqar + leader.byd;
-          return pTotal > leaderTotal ? p : leader;
-        }, targets[0]);
-      } else {
-        target = targets[Math.floor(Math.random() * targets.length)];
-      }
-      const targetPlayer = gameState.players[target.index];
+      // Mostrar modal para elegir a quién copiar
+      const modal = document.getElementById('specialModal');
+      document.getElementById('specialIcon').textContent = special.icon;
+      document.getElementById('specialTitle').textContent = special.name;
+      document.getElementById('specialDesc').textContent = 'Elige a quien copiar:';
+
+      const buttons = document.getElementById('specialButtons');
+      buttons.innerHTML = targets.map(t => `
+        <button class="choice-btn" style="background:${t.color};" onclick="applyEspejo(${t.index})">
+          Jugador ${t.number}
+          <span class="player-tires">
+            ${t.aiqar > 0 ? `<img src="/aiqar-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.aiqar}` : ''}
+            ${t.byd > 0 ? `<img src="/byd-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.byd}` : ''}
+          </span>
+        </button>
+      `).join('');
+
+      modal.classList.add('active');
+    }
+
+    window.applyEspejo = function(targetIndex) {
+      document.getElementById('specialModal').classList.remove('active');
+      const player = gameState.players[gameState.currentPlayer];
+      const targetPlayer = gameState.players[targetIndex];
 
       player.aiqar = targetPlayer.aiqar;
       player.byd = targetPlayer.byd;
 
       renderPlayers();
+      saveGameState();
 
       checkAiqarWin(player, 'aiqar');
       checkBydWin(player, 'byd');
 
-      showAlert(special.icon, special.name, `Copiaste las llantas del Jugador ${targetPlayer.number}!`, () => {
+      showAlert('🪞', 'ESPEJO', `Copiaste las llantas del Jugador ${targetPlayer.number}!`, () => {
         if (!gameState.gameOver) nextTurn();
       });
-    }
+    };
 
     let alertCallback = null;
 
     function showAlert(icon, title, desc, callback = null) {
-      document.getElementById('alertIcon').textContent = icon;
+      const alertIcon = document.getElementById('alertIcon');
+      if (typeof icon === 'string' && icon.startsWith('/')) {
+        alertIcon.innerHTML = `<img src="${icon}" alt="" style="width:160px;height:160px;object-fit:contain;">`;
+      } else {
+        alertIcon.textContent = icon;
+      }
       document.getElementById('alertTitle').textContent = title;
       document.getElementById('alertDesc').textContent = desc;
       document.getElementById('alertModal').classList.add('active');
@@ -2178,7 +2236,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         const bydWarning = gameState.bydPiecesFound === 4 && !bydWon;
 
         html += `<div class="progress-item aiqar-prog ${aiqarWon ? 'winner' : ''} ${aiqarWarning ? 'warning' : ''}">`;
-        html += `<img src="/aiqar-logo.svg" style="width:20px;height:12px;vertical-align:middle;"> `;
+        html += `<img src="/aiqar-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> `;
         if (aiqarWon) {
           html += `🏆 J${gameState.players[gameState.aiqarWinner].number}`;
         } else {
@@ -2187,7 +2245,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         html += `</div>`;
 
         html += `<div class="progress-item byd-prog ${bydWon ? 'winner' : ''} ${bydWarning ? 'warning' : ''}">`;
-        html += `<img src="/byd-logo.png" style="width:20px;height:12px;vertical-align:middle;"> `;
+        html += `<img src="/byd-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> `;
         if (bydWon) {
           html += `🏆 J${gameState.players[gameState.bydWinner].number}`;
         } else {
@@ -2198,22 +2256,22 @@ const title = "Juego de Llantas - Gana un Auto!";
         // Modo 2 y 3: Solo mostrar cuando alguien está cerca (3/4) o ganó
         // AIQAR
         if (gameState.aiqarWinner !== null) {
-          html += `<div class="progress-item aiqar-prog winner"><img src="/aiqar-logo.svg" style="width:20px;height:12px;vertical-align:middle;"> 🏆 J${gameState.players[gameState.aiqarWinner].number}</div>`;
+          html += `<div class="progress-item aiqar-prog winner"><img src="/aiqar-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> 🏆 J${gameState.players[gameState.aiqarWinner].number}</div>`;
         } else {
           const maxAiqar = Math.max(...gameState.players.map(p => p.aiqar));
           if (maxAiqar >= 3) {
             const leader = gameState.players.find(p => p.aiqar === maxAiqar);
-            html += `<div class="progress-item aiqar-prog warning"><img src="/aiqar-logo.svg" style="width:20px;height:12px;vertical-align:middle;"> ⚠️ J${leader.number}: ${maxAiqar}/4</div>`;
+            html += `<div class="progress-item aiqar-prog warning"><img src="/aiqar-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> ⚠️ J${leader.number}: ${maxAiqar}/4</div>`;
           }
         }
         // BYD
         if (gameState.bydWinner !== null) {
-          html += `<div class="progress-item byd-prog winner"><img src="/byd-logo.png" style="width:20px;height:12px;vertical-align:middle;"> 🏆 J${gameState.players[gameState.bydWinner].number}</div>`;
+          html += `<div class="progress-item byd-prog winner"><img src="/byd-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> 🏆 J${gameState.players[gameState.bydWinner].number}</div>`;
         } else {
           const maxByd = Math.max(...gameState.players.map(p => p.byd));
           if (maxByd >= 3) {
             const leader = gameState.players.find(p => p.byd === maxByd);
-            html += `<div class="progress-item byd-prog warning"><img src="/byd-logo.png" style="width:20px;height:12px;vertical-align:middle;"> ⚠️ J${leader.number}: ${maxByd}/4</div>`;
+            html += `<div class="progress-item byd-prog warning"><img src="/byd-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> ⚠️ J${leader.number}: ${maxByd}/4</div>`;
           }
         }
       }
@@ -2281,15 +2339,15 @@ const title = "Juego de Llantas - Gana un Auto!";
           <div class="player-number" style="background:${player.color};">${player.number}</div>
           <div class="player-stats">
             <div class="stat-row aiqar-row">
-              <img src="/aiqar-logo.svg" style="width:22px;height:14px;">
+              <img src="/aiqar-tire.png" style="width:20px;height:20px;object-fit:contain;">
               <span class="stat-num">${player.aiqar}</span>
             </div>
             <div class="stat-row byd-row">
-              <img src="/byd-logo.png" style="width:22px;height:14px;">
+              <img src="/byd-tire.png" style="width:20px;height:20px;object-fit:contain;">
               <span class="stat-num">${player.byd}</span>
             </div>
           </div>
-          ${player.prize ? `<span style="font-size:0.4rem;">🏆</span>` : ''}
+          ${player.prize === 'AIQAR' ? `<img src="/aiqar-car.png" alt="AIQAR" style="width:32px;height:24px;object-fit:contain;">` : player.prize === 'BYD' ? `<img src="/byd-car.png" alt="BYD" style="width:32px;height:24px;object-fit:contain;">` : player.prize ? `<span style="font-size:0.4rem;">🏆</span>` : ''}
         `;
         panel.appendChild(card);
       });
