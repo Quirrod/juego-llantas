@@ -11,7 +11,7 @@ const title = "Juego de Llantas - Gana un Auto!";
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <style>
+  <style is:global>
     * {
       margin: 0;
       padding: 0;
@@ -363,70 +363,129 @@ const title = "Juego de Llantas - Gana un Auto!";
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.3rem;
-      padding: 0.4rem 0.3rem;
-      background: rgba(0,0,0,0.3);
+      gap: 0.5rem;
+      padding: 0.7rem 0.4rem;
+      background: linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
       border: 3px solid #000;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 6px;
+      transition: transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .name-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+      pointer-events: none;
     }
 
     .name-item:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      border-color: var(--breick-yellow);
+    }
+
+    .name-item:hover::after {
+      transform: translateX(100%);
+    }
+
+    .name-item:focus-within {
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      border-color: var(--breick-yellow);
+      box-shadow: 0 0 14px rgba(255,184,28,0.4);
     }
 
     .name-item .name-badge {
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       font-weight: bold;
       color: #000;
       border: 3px solid #000;
-      box-shadow: 0 2px 0 rgba(0,0,0,0.4);
+      border-radius: 8px;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+      transition: transform 0.3s cubic-bezier(.4,0,.2,1.4);
+    }
+
+    .name-item:hover .name-badge {
+      transform: rotate(-8deg) scale(1.1);
     }
 
     .name-item input {
       width: 100%;
-      padding: 0.35rem 0.2rem;
+      padding: 0.5rem 0.3rem;
       border: 2px solid var(--breick-purple-light);
       background: var(--breick-purple-dark);
       color: #fff;
       font-family: 'Press Start 2P', cursive;
-      font-size: 0.4rem;
+      font-size: 0.5rem;
       text-align: center;
-      transition: border-color 0.15s ease;
+      border-radius: 4px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .name-item input::placeholder {
+      color: rgba(255,255,255,0.3);
     }
 
     .name-item input:focus {
       outline: none;
       border-color: var(--breick-yellow);
-      box-shadow: 0 0 8px rgba(255,184,28,0.5);
+      box-shadow: 0 0 12px rgba(255,184,28,0.5), inset 0 0 6px rgba(255,184,28,0.15);
     }
 
     .btn-start {
       width: 100%;
-      padding: 1rem;
+      padding: 1.1rem;
       background: linear-gradient(180deg, var(--breick-yellow) 0%, var(--breick-yellow-dark) 100%);
       border: 4px solid var(--breick-purple);
       color: var(--breick-purple-dark);
       font-family: 'Press Start 2P', cursive;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
       cursor: pointer;
-      transition: all 0.1s;
+      transition: transform 0.15s cubic-bezier(.4,0,.2,1), box-shadow 0.15s ease, background 0.15s ease;
+      box-shadow: 0 4px 0 var(--breick-purple-dark), 0 0 0 0 rgba(255,184,28,0);
+      position: relative;
+      overflow: hidden;
+      animation: startGlow 2.4s ease-in-out infinite;
+    }
+
+    .btn-start::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+      pointer-events: none;
     }
 
     .btn-start:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 4px 4px 0px var(--breick-purple);
+      transform: translateY(-3px);
+      box-shadow: 0 7px 0 var(--breick-purple-dark), 0 7px 24px rgba(255,184,28,0.5);
       background: linear-gradient(180deg, var(--breick-yellow-light) 0%, var(--breick-yellow) 100%);
     }
 
+    .btn-start:hover::after {
+      transform: translateX(100%);
+    }
+
     .btn-start:active {
-      transform: translate(0, 0);
-      box-shadow: none;
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--breick-purple-dark);
+    }
+
+    @keyframes startGlow {
+      0%, 100% { box-shadow: 0 4px 0 var(--breick-purple-dark), 0 0 0 0 rgba(255,184,28,0); }
+      50% { box-shadow: 0 4px 0 var(--breick-purple-dark), 0 0 22px 4px rgba(255,184,28,0.35); }
     }
 
     .game-area {
@@ -447,8 +506,8 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .game-sidebar {
-      width: 140px;
-      min-width: 140px;
+      width: 200px;
+      min-width: 200px;
       background: linear-gradient(180deg, var(--breick-purple) 0%, var(--breick-purple-dark) 100%);
       border-right: 3px solid var(--breick-yellow);
       display: flex;
@@ -457,39 +516,66 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .sidebar-header {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      justify-content: space-between;
-      padding: 0.4rem;
+      padding: 0.6rem 0.5rem;
       border-bottom: 2px solid var(--breick-yellow);
-      gap: 0.3rem;
+      gap: 0.5rem;
+      background: rgba(0,0,0,0.25);
     }
 
     .sidebar-buttons {
       display: flex;
-      gap: 0.2rem;
+      gap: 0.35rem;
     }
 
     .sidebar-buttons .btn-reveal,
     .sidebar-buttons .btn-restart {
-      padding: 0.3rem 0.4rem;
-      font-size: 0.5rem;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.75rem;
+      border-radius: 6px;
+      border-left: none;
+      line-height: 1;
     }
 
     .players-list {
       display: flex;
       flex-direction: column;
-      gap: 0;
-      flex: 1;
+      gap: 6px;
+      padding: 8px;
+      align-content: flex-start;
     }
 
     .players-list .player-card {
+      flex: 0 0 auto;
       flex-direction: row;
       justify-content: flex-start;
-      padding: 0.4rem;
-      border-left: none;
-      border-bottom: 1px solid var(--breick-purple-light);
+      padding: 0.6rem 0.65rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--breick-purple-light);
+      border-bottom: none;
       min-width: auto;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.3));
+      box-shadow: 0 2px 0 rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+      animation: cardSlideIn 0.4s cubic-bezier(.2,.9,.3,1.1) backwards;
+      gap: 0.65rem;
+    }
+
+    .players-list .player-card:hover {
+      background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(0,0,0,0.3));
+      border-left-color: var(--breick-yellow);
+    }
+
+    .players-list .player-card:nth-child(1) { animation-delay: 0.05s; }
+    .players-list .player-card:nth-child(2) { animation-delay: 0.1s; }
+    .players-list .player-card:nth-child(3) { animation-delay: 0.15s; }
+    .players-list .player-card:nth-child(4) { animation-delay: 0.2s; }
+    .players-list .player-card:nth-child(5) { animation-delay: 0.25s; }
+
+    @keyframes cardSlideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
     .board-area {
@@ -510,7 +596,7 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .coords-top .coord-cell {
-      width: calc((min(calc(100vw - 180px), calc(100vh - 60px)) - 20px) / 10);
+      width: calc((min(calc(100vw - 240px), calc(100vh - 60px)) - 20px) / 10);
       height: 20px;
       display: flex;
       align-items: center;
@@ -536,7 +622,7 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .coords-left .coord-cell {
       width: 20px;
-      height: calc((min(calc(100vw - 180px), calc(100vh - 60px)) - 20px) / 10);
+      height: calc((min(calc(100vw - 240px), calc(100vh - 60px)) - 20px) / 10);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -557,25 +643,26 @@ const title = "Juego de Llantas - Gana un Auto!";
     .current-player-badge {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.3rem;
-      padding: 0.2rem 0.4rem;
+      padding: 0.25rem 0.5rem;
       background: rgba(255,184,28,0.2);
       border: 2px solid var(--breick-yellow);
-      border-radius: 4px;
+      border-radius: 6px;
     }
 
     .current-player-num {
-      width: 28px;
-      height: 28px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
+      font-size: 1rem;
       font-weight: bold;
       color: #000;
-      border-radius: 6px;
+      border-radius: 8px;
       animation: pulseBadge 1s ease-in-out infinite;
-      box-shadow: 0 0 10px rgba(255,184,28,0.5);
+      box-shadow: 0 0 12px rgba(255,184,28,0.6);
     }
 
     @keyframes pulseBadge {
@@ -584,65 +671,87 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .turn-arrow {
-      font-size: 1rem;
-      animation: bounce-arrow 0.8s ease-in-out infinite;
+      font-size: 1.1rem;
+      animation: bounce-arrow 0.9s cubic-bezier(.5,0,.5,1) infinite;
       color: var(--breick-yellow);
+      filter: drop-shadow(0 0 4px rgba(255,184,28,0.7));
     }
 
     @keyframes bounce-arrow {
       0%, 100% { transform: translateX(0) scale(1); }
-      50% { transform: translateX(5px) scale(1.2); }
+      50% { transform: translateX(6px) scale(1.25); }
     }
 
     .btn-reveal {
       padding: 0.5rem 0.8rem;
-      background: rgba(255,200,50,0.3);
-      border: none;
-      border-left: 2px solid var(--breick-yellow);
+      background: linear-gradient(180deg, rgba(255,200,50,0.45), rgba(255,160,40,0.2));
+      border: 2px solid rgba(255,200,50,0.6);
       color: #fff;
       font-family: 'Press Start 2P', cursive;
       font-size: 0.6rem;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.4);
     }
 
     .btn-reveal:hover {
-      background: rgba(255,200,50,0.5);
+      background: linear-gradient(180deg, rgba(255,200,50,0.7), rgba(255,160,40,0.4));
+      transform: translateY(-2px);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.4), 0 0 12px rgba(255,200,50,0.5);
+    }
+
+    .btn-reveal:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.4);
     }
 
     .btn-restart {
       padding: 0.5rem 0.8rem;
-      background: rgba(255,50,50,0.3);
-      border: none;
-      border-left: 2px solid var(--breick-yellow);
+      background: linear-gradient(180deg, rgba(255,80,80,0.5), rgba(180,40,40,0.25));
+      border: 2px solid rgba(255,80,80,0.6);
       color: #fff;
       font-family: 'Press Start 2P', cursive;
       font-size: 0.6rem;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.4);
     }
 
     .btn-restart:hover {
-      background: rgba(255,50,50,0.5);
+      background: linear-gradient(180deg, rgba(255,80,80,0.75), rgba(180,40,40,0.45));
+      transform: translateY(-2px);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.4), 0 0 12px rgba(255,80,80,0.5);
+    }
+
+    .btn-restart:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.4);
     }
 
     .progress-panel {
       display: flex;
       align-items: center;
-      gap: 0.3rem;
-      padding: 0.2rem 0.5rem;
-      border-left: 2px solid var(--breick-yellow);
-      background: rgba(0,0,0,0.2);
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.5rem;
+      border-bottom: 2px solid rgba(255,184,28,0.4);
+      background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.15));
     }
 
     .progress-item {
       display: flex;
       align-items: center;
-      gap: 3px;
-      padding: 3px 6px;
-      border-radius: 4px;
-      font-size: 0.35rem;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.55rem;
       font-weight: bold;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+      transition: transform 0.2s ease;
+    }
+
+    .progress-item:hover {
+      transform: translateY(-1px) scale(1.05);
     }
 
     .progress-item.aiqar-prog {
@@ -682,64 +791,106 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .player-card {
-      flex: 1;
-      padding: 0.15rem;
-      background: rgba(0,0,0,0.2);
+      padding: 0.55rem 0.5rem;
+      background: rgba(0,0,0,0.18);
       border: none;
-      border-left: 2px solid var(--breick-purple-light);
+      border-left: 3px solid var(--breick-purple-light);
       text-align: center;
-      transition: all 0.1s;
+      transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center;
-      gap: 0.2rem;
+      justify-content: flex-start;
+      gap: 0.55rem;
       min-width: 45px;
+      position: relative;
     }
 
-    .player-card:first-child {
-      border-left: 2px solid var(--breick-yellow);
+    .player-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: linear-gradient(90deg, currentColor, transparent);
+      opacity: 0.15;
+      transition: width 0.3s ease;
+      pointer-events: none;
+    }
+
+    .player-card.active::before {
+      width: 100%;
     }
 
     .player-card.active {
-      /* Color aplicado dinámicamente en JS */
+      animation: activePulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes activePulse {
+      0%, 100% { filter: brightness(1) saturate(1); }
+      50% { filter: brightness(1.12) saturate(1.2); }
+    }
+
+    .player-card:first-child {
+      border-left: 3px solid var(--breick-yellow);
     }
 
     .player-card.winner-aiqar {
-      background: rgba(0, 191, 255, 0.35);
+      background: linear-gradient(90deg, rgba(0, 191, 255, 0.5), rgba(0, 191, 255, 0.15));
+      animation: winnerGlow 2s ease-in-out infinite;
     }
 
     .player-card.winner-byd {
-      background: rgba(255, 69, 0, 0.35);
+      background: linear-gradient(90deg, rgba(255, 69, 0, 0.5), rgba(255, 69, 0, 0.15));
+      animation: winnerGlow 2s ease-in-out infinite;
     }
 
     .player-card.winner-vale {
-      background: rgba(0, 255, 0, 0.35);
+      background: linear-gradient(90deg, rgba(0, 255, 100, 0.45), rgba(0, 255, 100, 0.15));
+    }
+
+    @keyframes winnerGlow {
+      0%, 100% { box-shadow: inset 0 0 0 rgba(255,255,255,0); }
+      50% { box-shadow: inset 0 0 20px rgba(255,255,255,0.2); }
     }
 
     .player-number {
-      font-size: 0.6rem;
-      width: 20px;
-      height: 20px;
+      font-size: 0.7rem;
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #000;
       font-weight: bold;
-      border-radius: 4px;
-      border: 2px solid rgba(0,0,0,0.3);
+      border-radius: 6px;
+      border: 2px solid rgba(0,0,0,0.35);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+      transition: transform 0.2s ease;
+    }
+
+    .player-card.active .player-number {
+      animation: numberPop 1.2s ease-in-out infinite;
+    }
+
+    @keyframes numberPop {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.15) rotate(-3deg); }
     }
 
     .player-info {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
       flex: 1;
       min-width: 0;
+      align-items: flex-start;
     }
 
     .player-name {
-      font-size: 0.4rem;
+      font-size: 0.5rem;
       color: var(--breick-yellow);
       text-shadow: 1px 1px 0 #000;
       white-space: nowrap;
@@ -747,31 +898,73 @@ const title = "Juego de Llantas - Gana un Auto!";
       text-overflow: ellipsis;
       letter-spacing: 0.5px;
       line-height: 1.1;
+      max-width: 100%;
     }
 
     .player-stats {
       display: flex;
       flex-direction: row;
-      gap: 3px;
+      gap: 8px;
       align-items: center;
       overflow: hidden;
     }
 
     .player-stats img {
-      width: 20px !important;
-      height: 20px !important;
-      max-width: 20px !important;
-      max-height: 20px !important;
+      width: 18px !important;
+      height: 18px !important;
+      max-width: 18px !important;
+      max-height: 18px !important;
       object-fit: contain;
+      transition: transform 0.2s ease;
     }
 
     .stat-row {
       display: flex;
       align-items: center;
-      gap: 1px;
-      font-size: 0.32rem;
+      gap: 4px;
+      font-size: 0.6rem;
       font-weight: bold;
       line-height: 1;
+    }
+
+    .stat-row .stat-num {
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(.4,0,.6,1.5), color 0.2s ease;
+    }
+
+    .stat-row.bump .stat-num {
+      animation: statBump 0.5s cubic-bezier(.4,0,.6,1.5);
+    }
+
+    @keyframes statBump {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.6); color: #FFF; }
+      100% { transform: scale(1); }
+    }
+
+    .player-prize-slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .player-prize-slot .prize-car {
+      width: 38px;
+      height: 28px;
+      object-fit: contain;
+      animation: prizeWobble 2.2s ease-in-out infinite;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    .player-prize-slot .prize-trophy {
+      font-size: 1rem;
+      animation: prizeWobble 2.2s ease-in-out infinite;
+    }
+
+    @keyframes prizeWobble {
+      0%, 100% { transform: rotate(-6deg) scale(1); }
+      50% { transform: rotate(6deg) scale(1.08); }
     }
 
     .stat-row .stat-logo {
@@ -882,8 +1075,8 @@ const title = "Juego de Llantas - Gana un Auto!";
       padding: 6px;
       border: 4px solid var(--breick-yellow);
       box-shadow: 0 0 30px rgba(255, 184, 28, 0.4);
-      width: min(calc(100vw - 180px), calc(100vh - 60px));
-      height: min(calc(100vw - 180px), calc(100vh - 60px));
+      width: min(calc(100vw - 240px), calc(100vh - 60px));
+      height: min(calc(100vw - 240px), calc(100vh - 60px));
       max-width: calc(100vh - 60px);
       max-height: calc(100vh - 60px);
     }
@@ -913,16 +1106,50 @@ const title = "Juego de Llantas - Gana un Auto!";
       box-shadow: 0 0 20px rgba(255, 184, 28, 0.8), 0 8px 16px rgba(0,0,0,0.4);
     }
 
+    .cell .cell-q {
+      font-size: clamp(16px, 5vw, 32px);
+      color: #FFD700;
+      text-shadow: 0 0 10px #FFB81C, 2px 2px 0 #4A1F56;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      animation: qFloat 2.4s ease-in-out infinite;
+    }
+
+    @keyframes qFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+
     .cell.clicking {
-      animation: cellClick 0.3s ease-out;
+      animation: cellClick 0.5s cubic-bezier(.4,0,.6,1.5) forwards;
       z-index: 20;
     }
 
+    .cell.clicking::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,184,28,0.5) 40%, transparent 70%);
+      animation: ringFlash 0.5s ease-out forwards;
+      pointer-events: none;
+      z-index: 5;
+    }
+
     @keyframes cellClick {
-      0% { transform: scale(1); }
-      30% { transform: scale(0.85); box-shadow: 0 0 30px rgba(255, 255, 255, 0.9); }
-      60% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+      0% { transform: scale(1); filter: brightness(1); }
+      25% { transform: scale(0.82) rotate(-3deg); filter: brightness(1.6); box-shadow: 0 0 40px rgba(255, 255, 255, 1); }
+      55% { transform: scale(1.18) rotate(2deg); filter: brightness(1.3); }
+      100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+    }
+
+    @keyframes ringFlash {
+      0% { opacity: 1; transform: scale(0.3); }
+      60% { opacity: 0.8; transform: scale(1.4); }
+      100% { opacity: 0; transform: scale(2); }
     }
 
     .cell.revealed {
@@ -932,11 +1159,12 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .cell.just-revealed {
-      animation: flipIn 0.4s ease-out, glowPulse 0.6s ease-out;
+      animation: flipIn 0.55s cubic-bezier(.3,1.4,.4,1) both, glowPulse 0.7s ease-out 0.2s;
     }
 
     @keyframes flipIn {
-      0% { transform: rotateY(90deg) scale(0.8); opacity: 0.5; }
+      0% { transform: rotateY(90deg) scale(0.7); opacity: 0; }
+      40% { transform: rotateY(20deg) scale(1.1); opacity: 1; }
       100% { transform: rotateY(0deg) scale(1); opacity: 1; }
     }
 
@@ -1135,6 +1363,119 @@ const title = "Juego de Llantas - Gana un Auto!";
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0.4; }
     }
 
+    .fx-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1400;
+      overflow: hidden;
+    }
+
+    .fx-star {
+      position: absolute;
+      animation: starBurst forwards ease-out;
+      filter: drop-shadow(0 0 6px currentColor);
+      will-change: transform, opacity;
+      opacity: 0;
+    }
+
+    @keyframes starBurst {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.2) rotate(0deg);
+      }
+      15% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1.2) rotate(45deg);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(var(--drift, 0), 60vh) scale(1) rotate(360deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--drift, 0), 80vh) scale(0.8) rotate(540deg);
+      }
+    }
+
+    .fx-warning-banner {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 1.2rem 1.8rem;
+      background: rgba(0,0,0,0.85);
+      border: 4px solid;
+      border-radius: 14px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.85rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      letter-spacing: 1px;
+      max-width: 90vw;
+      animation: warningPulseFx 0.6s ease-in-out 4, warningFadeOut 0.4s ease-in 4s forwards;
+      z-index: 1410;
+    }
+
+    .fx-warning-text {
+      text-shadow: 2px 2px 0 #000, 0 0 12px currentColor;
+    }
+
+    .fx-warning-icon {
+      font-size: 1.1rem;
+      animation: warnShake 0.5s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes warningPulseFx {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.06); }
+    }
+
+    @keyframes warningFadeOut {
+      to { opacity: 0; transform: translate(-50%, -60%) scale(0.95); }
+    }
+
+    @keyframes warnShake {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+    }
+
+    .fx-car {
+      position: absolute;
+      width: clamp(80px, 14vw, 200px);
+      height: auto;
+      opacity: 0;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
+      will-change: transform, opacity;
+    }
+
+    .fx-car.fx-car-ltr {
+      left: -25vw;
+      animation: carDriveLTR linear forwards;
+    }
+
+    .fx-car.fx-car-rtl {
+      right: -25vw;
+      animation: carDriveRTL linear forwards;
+    }
+
+    @keyframes carDriveLTR {
+      0% { opacity: 0; transform: translateX(0) scale(var(--car-scale, 1)); }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(150vw) scale(var(--car-scale, 1)); }
+    }
+
+    @keyframes carDriveRTL {
+      0% { opacity: 0; transform: translateX(0) scaleX(-1) scale(var(--car-scale, 1)); }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(-150vw) scaleX(-1) scale(var(--car-scale, 1)); }
+    }
+
     .alert-celebrate {
       animation: celebratePulse 0.6s ease-in-out 3;
     }
@@ -1157,12 +1498,45 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .result-item {
       display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 0.55rem 0.6rem;
+      margin-bottom: 0.4rem;
+      border: 4px solid;
+      border-radius: 8px;
+      font-size: 0.4rem;
+    }
+
+    .result-row-top {
+      display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.5rem;
-      margin-bottom: 0.3rem;
-      border: 4px solid;
-      font-size: 0.4rem;
+      gap: 0.4rem;
+    }
+
+    .result-stats {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.6rem;
+      padding-top: 0.4rem;
+      border-top: 1px dashed rgba(255,255,255,0.18);
+    }
+
+    .result-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 6px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.55rem;
+      color: #fff;
+      text-shadow: 1px 1px 0 #000;
+    }
+
+    .result-stat-cells {
+      color: var(--breick-yellow);
     }
 
     .result-item.pos-1 { border-color: #00BFFF; background: rgba(0, 191, 255, 0.2); }
@@ -1221,6 +1595,179 @@ const title = "Juego de Llantas - Gana un Auto!";
     .special-icon {
       font-size: 3rem;
       margin-bottom: 0.5rem;
+    }
+
+    .active-player-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.7rem 0.8rem;
+      margin-bottom: 1rem;
+      background: rgba(0,0,0,0.35);
+      border: 3px solid;
+      border-radius: 10px;
+      box-shadow: 0 0 18px rgba(255,255,255,0.08), inset 0 0 12px rgba(255,255,255,0.04);
+    }
+
+    .active-player-label {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+      color: var(--breick-yellow);
+      letter-spacing: 2px;
+      text-shadow: 1px 1px 0 #000;
+    }
+
+    .active-player-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .active-player-badge {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.85rem;
+      color: #000;
+      border: 2px solid rgba(0,0,0,0.4);
+      border-radius: 8px;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+      font-weight: bold;
+    }
+
+    .active-player-name {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.85rem;
+      color: #fff;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .active-player-tires {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .tire-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      background: rgba(0,0,0,0.45);
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.75rem;
+      color: #fff;
+      text-shadow: 1px 1px 0 #000;
+    }
+
+    .tire-badge.tire-aiqar {
+      border-color: #00BFFF;
+      color: #00E0FF;
+    }
+
+    .tire-badge.tire-byd {
+      border-color: #FF4500;
+      color: #FF8050;
+    }
+
+    .targets-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      width: 100%;
+    }
+
+    .target-btn {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      gap: 0.8rem;
+      padding: 0.9rem 1rem !important;
+      min-height: auto !important;
+      text-align: left !important;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .target-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(0,0,0,0.2));
+      pointer-events: none;
+    }
+
+    .target-name-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .target-badge {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.85rem;
+      color: #000;
+      border: 2px solid rgba(0,0,0,0.5);
+      border-radius: 8px;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.5);
+      font-weight: bold;
+      filter: brightness(1.15);
+    }
+
+    .target-name {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.9rem;
+      color: #fff;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .target-tires {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .target-tires .tire-badge {
+      background: rgba(0,0,0,0.55);
+      font-size: 0.7rem;
+      padding: 4px 8px;
+    }
+
+    .tire-choice {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+      padding: 1rem !important;
+      text-align: center !important;
+    }
+
+    .tire-choice img {
+      margin: 0 auto;
+    }
+
+    .tire-choice small {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.55rem;
+      opacity: 0.85;
+      margin-top: 0.3rem;
+      display: block;
     }
 
     .choice-buttons {
@@ -1293,25 +1840,25 @@ const title = "Juego de Llantas - Gana un Auto!";
       }
 
       .player-card {
-        padding: 0.1rem;
+        padding: 0.4rem 0.3rem;
         min-width: 40px;
-        gap: 0.15rem;
+        gap: 0.3rem;
       }
 
       .player-number {
-        width: 18px;
-        height: 18px;
-        font-size: 0.5rem;
+        width: 22px;
+        height: 22px;
+        font-size: 0.55rem;
       }
 
       .stat-row {
-        font-size: 0.3rem;
-        gap: 1px;
+        font-size: 0.5rem;
+        gap: 3px;
       }
 
       .player-stats img {
-        width: 18px !important;
-        height: 12px !important;
+        width: 16px !important;
+        height: 16px !important;
       }
 
       .current-player-num {
@@ -1391,15 +1938,15 @@ const title = "Juego de Llantas - Gana un Auto!";
       <div class="mode-selector">
         <div class="mode-btn" data-mode="coleccion">
           <h3>MODO 1: COLECCION</h3>
-          <p>4 llantas + llave = auto. El ULTIMO en completar cada set gana ese auto.</p>
+          <p>Hay que juntar 4 llantas + 1 llave de un mismo auto. El ÚLTIMO que complete cada set se lleva ese auto.</p>
         </div>
         <div class="mode-btn" data-mode="carrera">
           <h3>MODO 2: CARRERA</h3>
-          <p>PRIMERO en juntar 4 llantas de un auto lo gana. Sin llaves.</p>
+          <p>El PRIMERO en juntar 4 llantas de un auto lo gana. No hay llaves ni casillas especiales.</p>
         </div>
         <div class="mode-btn active" data-mode="caos">
           <h3>MODO 3: CAOS</h3>
-          <p>Como Carrera + casillas especiales. Todos ganan algo!</p>
+          <p>Igual a Carrera, pero con casillas especiales (bomba, robar, intercambiar…) que cambian la partida. Todos los jugadores se llevan algún premio.</p>
         </div>
       </div>
 
@@ -1571,14 +2118,14 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     // Tipos especiales
     const SPECIAL_TYPES = [
-      { id: 'doble', icon: '🔄', name: 'DOBLE TURNO', desc: 'Juegas otra vez!' },
-      { id: 'robar', icon: '🏴‍☠️', name: 'ROBAR', desc: 'Robas 1 llanta a otro jugador' },
-      { id: 'revelar2', icon: '👀', name: 'REVELAR 2', desc: 'Puedes abrir otra casilla' },
-      { id: 'bomba', icon: '💣', name: 'BOMBA', desc: 'Pierdes todas tus llantas de un tipo al azar' },
-      { id: 'comodin', icon: '🃏', name: 'COMODIN', desc: 'Cuenta como llanta del tipo que elijas' },
-      { id: 'intercambio', icon: '🔀', name: 'INTERCAMBIO', desc: 'Intercambias llantas con otro jugador' },
-      { id: 'espejo', icon: '🪞', name: 'ESPEJO', desc: 'Copias las llantas de otro jugador' },
-      { id: 'bloqueo', icon: '🚫', name: 'BLOQUEO', desc: 'El siguiente jugador pierde su turno' }
+      { id: 'doble', icon: '🔄', name: 'DOBLE TURNO', desc: '¡Bonus! Vas a abrir otra casilla en este mismo turno.' },
+      { id: 'robar', icon: '🏴‍☠️', name: 'ROBAR', desc: 'Elegí a quién robarle 1 llanta. Esa llanta pasa a tu cuenta.' },
+      { id: 'revelar2', icon: '👀', name: 'REVELAR 2', desc: '¡Bonus! Vas a poder abrir otra casilla en este mismo turno.' },
+      { id: 'bomba', icon: '💣', name: 'BOMBA', desc: '¡Boom! Perdés TODAS las llantas de un tipo (AIQAR o BYD) elegido al azar.' },
+      { id: 'comodin', icon: '🃏', name: 'COMODIN', desc: 'Elegí un tipo y sumás 1 llanta de ese tipo a tu cuenta.' },
+      { id: 'intercambio', icon: '🔀', name: 'INTERCAMBIO', desc: 'Cambiás TODAS tus llantas (AIQAR y BYD) por las de otro jugador.' },
+      { id: 'espejo', icon: '🪞', name: 'ESPEJO', desc: 'Copiás las llantas de otro jugador. Las tuyas se reemplazan por las del elegido.' },
+      { id: 'bloqueo', icon: '🚫', name: 'BLOQUEO', desc: 'El próximo jugador en la rueda pierde su turno.' }
     ];
 
     // Estado del juego
@@ -1669,6 +2216,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       gameState.skipNextPlayer = false;
       gameState.extraTurn = false;
       gameState.revealExtra = false;
+      gameState.winCounter = 0;
 
       generateBoard();
 
@@ -1947,15 +2495,14 @@ const title = "Juego de Llantas - Gana un Auto!";
             cell.style.boxShadow = `0 0 8px ${playerColor}, inset 0 0 4px rgba(0,0,0,0.3)`;
           }
         } else {
-          cell.innerHTML = '<span style="font-size:clamp(16px, 5vw, 32px);color:#FFD700;text-shadow:0 0 10px #FFB81C, 2px 2px 0 #4A1F56;font-weight:bold;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">?</span>';
+          cell.innerHTML = '<span class="cell-q">?</span>';
           cell.addEventListener('click', (e) => {
             e.preventDefault();
-            if (cell.classList.contains('clicking')) return;
+            if (cell.classList.contains('clicking') || gameState.revealed[i]) return;
             cell.classList.add('clicking');
-            // Esperar animación de click antes de revelar
             setTimeout(() => {
               revealCell(i);
-            }, 200);
+            }, 250);
           });
         }
 
@@ -2014,6 +2561,7 @@ const title = "Juego de Llantas - Gana un Auto!";
           // Modo 2/3: Alerta cuando tiene 3 llantas
           checkMode23Alert(player, 'aiqar');
         }
+        celebrateTireFound(item, player);
         checkAiqarWin(player, item);
       } else if (item === 'key-aiqar') {
         player.keyAiqar = true;
@@ -2021,6 +2569,7 @@ const title = "Juego de Llantas - Gana un Auto!";
           gameState.aiqarPiecesFound++;
           checkMode1Alert('aiqar');
         }
+        celebrateTireFound(item, player);
         checkAiqarWin(player, item);
       } else if (item === 'byd') {
         player.byd++;
@@ -2031,6 +2580,7 @@ const title = "Juego de Llantas - Gana un Auto!";
           // Modo 2/3: Alerta cuando tiene 3 llantas
           checkMode23Alert(player, 'byd');
         }
+        celebrateTireFound(item, player);
         checkBydWin(player, item);
       } else if (item === 'key-byd') {
         player.keyByd = true;
@@ -2038,6 +2588,7 @@ const title = "Juego de Llantas - Gana un Auto!";
           gameState.bydPiecesFound++;
           checkMode1Alert('byd');
         }
+        celebrateTireFound(item, player);
         checkBydWin(player, item);
       } else if (item === 'brick') {
         player.bricks++;
@@ -2046,13 +2597,13 @@ const title = "Juego de Llantas - Gana un Auto!";
         return; // Special handles next turn
       }
 
-      renderBoard();
+      updateRevealedCell(index);
       renderPlayers();
       checkAlerts();
       saveGameState();
 
       // Limpiar last revealed después de la animación
-      setTimeout(() => { gameState.lastRevealed = null; }, 500);
+      setTimeout(() => { gameState.lastRevealed = null; }, 600);
 
       if (!gameState.gameOver) {
         if (gameState.revealExtra) {
@@ -2065,6 +2616,32 @@ const title = "Juego de Llantas - Gana un Auto!";
           nextTurn();
         }
       }
+    }
+
+    function updateRevealedCell(index) {
+      const board = document.getElementById('board');
+      const cell = board.children[index];
+      if (!cell) return;
+
+      const itemType = gameState.board[index];
+      const type = itemType.split('-')[0];
+
+      cell.classList.remove('clicking');
+      cell.className = 'cell revealed just-revealed' + (type === 'special' ? ' special' : ' ' + itemType);
+      cell.innerHTML = '';
+      cell.style.borderColor = '';
+      cell.style.boxShadow = '';
+
+      applyCellBackground(cell, itemType);
+
+      if (gameState.cellOwners[index] !== null) {
+        const playerColor = gameState.players[gameState.cellOwners[index]].color;
+        cell.style.borderColor = playerColor;
+        cell.style.boxShadow = `0 0 12px ${playerColor}, inset 0 0 4px rgba(0,0,0,0.3)`;
+      }
+
+      // Limpiar just-revealed después de la animación para no repetir
+      setTimeout(() => cell.classList.remove('just-revealed'), 800);
     }
 
     function checkMode1Alert(carType) {
@@ -2105,7 +2682,9 @@ const title = "Juego de Llantas - Gana un Auto!";
         // Ya se incrementó aiqarPiecesFound en revealCell
         if (gameState.aiqarPiecesFound >= 5) {
           gameState.aiqarWinner = gameState.currentPlayer;
+          gameState.winCounter = (gameState.winCounter || 0) + 1;
           player.prize = 'AIQAR';
+          player.wonAt = gameState.winCounter;
           player.protected = true;
           showAlert('/aiqar-car.png', 'GANADOR AIQAR!', `${player.name} encontro la ultima pieza y gano AIQAR!`);
           checkGameEnd();
@@ -2114,7 +2693,9 @@ const title = "Juego de Llantas - Gana un Auto!";
         // Modo 2 y 3: Solo 4 llantas, PRIMERO gana
         if (player.aiqar >= 4) {
           gameState.aiqarWinner = gameState.currentPlayer;
+          gameState.winCounter = (gameState.winCounter || 0) + 1;
           player.prize = 'AIQAR';
+          player.wonAt = gameState.winCounter;
           player.protected = true;
           showAlert('/aiqar-car.png', 'GANADOR AIQAR!', `${player.name} gano el AIQAR!`);
           checkGameEnd();
@@ -2129,7 +2710,9 @@ const title = "Juego de Llantas - Gana un Auto!";
         // Modo 1: Quien encuentra la ultima pieza (5ta) gana
         if (gameState.bydPiecesFound >= 5) {
           gameState.bydWinner = gameState.currentPlayer;
+          gameState.winCounter = (gameState.winCounter || 0) + 1;
           player.prize = 'BYD';
+          player.wonAt = gameState.winCounter;
           player.protected = true;
           showAlert('/byd-car.png', 'GANADOR BYD!', `${player.name} encontro la ultima pieza y gano BYD!`);
           checkGameEnd();
@@ -2138,7 +2721,9 @@ const title = "Juego de Llantas - Gana un Auto!";
         // Modo 2 y 3: Solo 4 llantas, PRIMERO gana
         if (player.byd >= 4) {
           gameState.bydWinner = gameState.currentPlayer;
+          gameState.winCounter = (gameState.winCounter || 0) + 1;
           player.prize = 'BYD';
+          player.wonAt = gameState.winCounter;
           player.protected = true;
           showAlert('/byd-car.png', 'GANADOR BYD!', `${player.name} gano el BYD!`);
           checkGameEnd();
@@ -2188,10 +2773,29 @@ const title = "Juego de Llantas - Gana un Auto!";
       const results = document.getElementById('finalResults');
       results.innerHTML = '';
 
-      // Ordenar por premio
-      const prizeOrder = ['AIQAR', 'BYD', '10,000 Bs', '8,000 Bs', '6,000 Bs'];
+      // Conteo de casillas reveladas por jugador (índice en cellOwners)
+      const cellsByPlayer = new Array(gameState.players.length).fill(0);
+      gameState.cellOwners.forEach(owner => {
+        if (owner !== null && owner !== undefined) cellsByPlayer[owner]++;
+      });
+
+      // Orden:
+      //  1) ganadores de auto primero, en orden cronológico de victoria (wonAt asc)
+      //  2) luego el resto, por valor del vale (10k > 8k > 6k > 4k > 2k > 1k)
+      const valeRank = (prize) => {
+        if (typeof prize !== 'string') return 999;
+        const m = prize.match(/(\d[\d,]*)\s*Bs/);
+        if (!m) return 999;
+        return -parseInt(m[1].replace(/,/g, ''), 10);
+      };
+
       const sorted = [...gameState.players].sort((a, b) => {
-        return prizeOrder.indexOf(a.prize) - prizeOrder.indexOf(b.prize);
+        const aCar = a.prize === 'AIQAR' || a.prize === 'BYD';
+        const bCar = b.prize === 'AIQAR' || b.prize === 'BYD';
+        if (aCar && !bCar) return -1;
+        if (!aCar && bCar) return 1;
+        if (aCar && bCar) return (a.wonAt || 0) - (b.wonAt || 0);
+        return valeRank(a.prize) - valeRank(b.prize);
       });
 
       sorted.forEach((player, i) => {
@@ -2206,13 +2810,28 @@ const title = "Juego de Llantas - Gana un Auto!";
           prizeHtml = `💵 ${player.prize}`;
         }
         const safeName = (player.name || `Jugador ${player.number}`).replace(/</g, '&lt;');
+        const playerIdx = gameState.players.indexOf(player);
+        const cellsRevealed = cellsByPlayer[playerIdx] || 0;
         div.innerHTML = `
-          <div class="result-left">
-            <span class="result-position">#${i + 1}</span>
-            <span class="result-color" style="background:${player.color};">${player.number}</span>
-            <span class="result-name">${safeName}</span>
+          <div class="result-row-top">
+            <div class="result-left">
+              <span class="result-position">#${i + 1}</span>
+              <span class="result-color" style="background:${player.color};">${player.number}</span>
+              <span class="result-name">${safeName}</span>
+            </div>
+            <div class="result-prize">${prizeHtml}</div>
           </div>
-          <div class="result-prize">${prizeHtml}</div>
+          <div class="result-stats">
+            <span class="result-stat" title="Llantas AIQAR encontradas">
+              <img src="/aiqar-tire.png" width="22" height="22" style="width:22px;height:22px;object-fit:contain;flex-shrink:0;"> ${player.aiqar}
+            </span>
+            <span class="result-stat" title="Llantas BYD encontradas">
+              <img src="/byd-tire.png" width="22" height="22" style="width:22px;height:22px;object-fit:contain;flex-shrink:0;"> ${player.byd}
+            </span>
+            <span class="result-stat result-stat-cells" title="Casillas reveladas">
+              🎯 ${cellsRevealed}
+            </span>
+          </div>
         `;
         results.appendChild(div);
       });
@@ -2230,12 +2849,12 @@ const title = "Juego de Llantas - Gana un Auto!";
       switch (type) {
         case 'doble':
           gameState.extraTurn = true;
-          showAlert(special.icon, special.name, special.desc);
+          showAlert(special.icon, special.name, `${player.name}: ${special.desc}`);
           break;
 
         case 'revelar2':
           gameState.revealExtra = true;
-          showAlert(special.icon, special.name, special.desc);
+          showAlert(special.icon, special.name, `${player.name}: ${special.desc}`);
           break;
 
         case 'robar':
@@ -2260,7 +2879,7 @@ const title = "Juego de Llantas - Gana un Auto!";
 
         case 'bloqueo':
           gameState.skipNextPlayer = true;
-          showAlert(special.icon, special.name, 'El siguiente jugador perdera su turno!', nextTurn);
+          showAlert(special.icon, special.name, 'El próximo jugador en jugar va a perder su turno (lo salteamos).', nextTurn);
           break;
       }
     }
@@ -2271,32 +2890,60 @@ const title = "Juego de Llantas - Gana un Auto!";
         .filter(p => !p.protected && p.index !== gameState.currentPlayer);
     }
 
+    function renderTireBadges(aiqar, byd, size = 22) {
+      return `
+        <span class="tire-badge tire-aiqar" title="Llantas AIQAR">
+          <img src="/aiqar-tire.png" width="${size}" height="${size}" style="width:${size}px;height:${size}px;flex-shrink:0;object-fit:contain;"> ${aiqar}
+        </span>
+        <span class="tire-badge tire-byd" title="Llantas BYD">
+          <img src="/byd-tire.png" width="${size}" height="${size}" style="width:${size}px;height:${size}px;flex-shrink:0;object-fit:contain;"> ${byd}
+        </span>
+      `;
+    }
+
+    function renderActivePlayerHeader() {
+      const player = gameState.players[gameState.currentPlayer];
+      const safeName = (player.name || `Jugador ${player.number}`).replace(/</g, '&lt;');
+      return `
+        <div class="active-player-header" style="border-color:${player.color};">
+          <span class="active-player-label">TU TURNO</span>
+          <div class="active-player-row">
+            <span class="active-player-badge" style="background:${player.color};">${player.number}</span>
+            <span class="active-player-name">${safeName}</span>
+          </div>
+          <div class="active-player-tires">${renderTireBadges(player.aiqar, player.byd, 24)}</div>
+        </div>
+      `;
+    }
+
+    function renderTargetButton(target, onclickAttr) {
+      const safeName = (target.name || `Jugador ${target.number}`).replace(/</g, '&lt;');
+      return `
+        <button class="choice-btn target-btn" style="background:${target.color}; --player-color:${target.color};" ${onclickAttr}>
+          <span class="target-name-row">
+            <span class="target-badge" style="background:${target.color};">${target.number}</span>
+            <span class="target-name">${safeName}</span>
+          </span>
+          <span class="target-tires">${renderTireBadges(target.aiqar, target.byd, 22)}</span>
+        </button>
+      `;
+    }
+
     function executeRobar(player, special) {
       const targets = getValidTargets().filter(p => p.aiqar > 0 || p.byd > 0);
 
       if (targets.length === 0) {
-        showAlert(special.icon, special.name, 'No hay nadie a quien robar!', nextTurn);
+        showAlert(special.icon, special.name, 'Nadie tiene llantas que puedas robar.', nextTurn);
         return;
       }
 
-      // Mostrar modal para elegir a quién robar
-      const modal = document.getElementById('specialModal');
-      document.getElementById('specialIcon').textContent = special.icon;
-      document.getElementById('specialTitle').textContent = special.name;
-      document.getElementById('specialDesc').textContent = 'Elige a quien robarle 1 llanta:';
-
-      const buttons = document.getElementById('specialButtons');
-      buttons.innerHTML = targets.map(t => `
-        <button class="choice-btn" style="background:${t.color};" onclick="selectRobarTarget(${t.index})">
-          ${t.name}
-          <span class="player-tires">
-            ${t.aiqar > 0 ? `<img src="/aiqar-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.aiqar}` : ''}
-            ${t.byd > 0 ? `<img src="/byd-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.byd}` : ''}
-          </span>
-        </button>
-      `).join('');
-
-      modal.classList.add('active');
+      openTargetModal({
+        icon: special.icon,
+        title: special.name,
+        desc: 'Vas a robarle 1 llanta a otro jugador (esa llanta pasa a tu cuenta). Elegí a quién:',
+        targets,
+        onclickFn: 'selectRobarTarget'
+      });
     }
 
     window.selectRobarTarget = function(targetIndex) {
@@ -2312,15 +2959,18 @@ const title = "Juego de Llantas - Gana un Auto!";
       }
 
       // Mostrar selección de tipo de llanta
-      document.getElementById('specialDesc').textContent = `Que llanta robarle a ${targetPlayer.name}?`;
+      const safeName = (targetPlayer.name || `Jugador ${targetPlayer.number}`).replace(/</g, '&lt;');
+      document.getElementById('specialDesc').textContent = `${safeName} tiene 2 tipos de llantas. ¿Cuál querés robarle?`;
       const buttons = document.getElementById('specialButtons');
-      buttons.innerHTML = `
-        <button class="choice-btn aiqar" onclick="applyRobar(${targetIndex}, 'aiqar')">
-          <img src="/aiqar-tire.png" style="width:48px;height:48px;object-fit:contain;vertical-align:middle;"> AIQAR (${targetPlayer.aiqar})
-        </button>
-        <button class="choice-btn byd" onclick="applyRobar(${targetIndex}, 'byd')">
-          <img src="/byd-tire.png" style="width:48px;height:48px;object-fit:contain;vertical-align:middle;"> BYD (${targetPlayer.byd})
-        </button>
+      buttons.innerHTML = renderActivePlayerHeader() + `
+        <div class="targets-grid">
+          <button class="choice-btn tire-choice aiqar" onclick="applyRobar(${targetIndex}, 'aiqar')">
+            <img src="/aiqar-tire.png" width="48" height="48" style="width:48px;height:48px;object-fit:contain;flex-shrink:0;"> AIQAR<br><small>(le quedan ${targetPlayer.aiqar})</small>
+          </button>
+          <button class="choice-btn tire-choice byd" onclick="applyRobar(${targetIndex}, 'byd')">
+            <img src="/byd-tire.png" width="48" height="48" style="width:48px;height:48px;object-fit:contain;flex-shrink:0;"> BYD<br><small>(le quedan ${targetPlayer.byd})</small>
+          </button>
+        </div>
       `;
     };
 
@@ -2339,7 +2989,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       if (type === 'aiqar') checkAiqarWin(player, 'aiqar');
       else checkBydWin(player, 'byd');
 
-      showAlert('🏴‍☠️', 'ROBO EXITOSO', `Robaste 1 llanta ${type.toUpperCase()} a ${targetPlayer.name}!`, () => {
+      showAlert('🏴‍☠️', 'ROBO EXITOSO', `${player.name} le robó 1 llanta ${type.toUpperCase()} a ${targetPlayer.name}.`, () => {
         if (!gameState.gameOver) nextTurn();
       });
     };
@@ -2350,7 +3000,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       if (player.byd > 0) types.push('byd');
 
       if (types.length === 0) {
-        showAlert(special.icon, special.name, 'No tenias llantas que perder!', nextTurn);
+        showAlert(special.icon, special.name, `${player.name}, no tenías llantas, así que la bomba no te quitó nada. ¡Suerte!`, nextTurn);
         return;
       }
 
@@ -2359,19 +3009,25 @@ const title = "Juego de Llantas - Gana un Auto!";
       player[type] = 0;
 
       renderPlayers();
-      showAlert(special.icon, special.name, `Perdiste ${lost} llantas ${type.toUpperCase()}!`, nextTurn);
+      showAlert(special.icon, special.name, `${player.name} perdió ${lost} llanta${lost === 1 ? '' : 's'} ${type.toUpperCase()}.`, nextTurn);
     }
 
     function showComodinChoice(player, special) {
       const modal = document.getElementById('specialModal');
       document.getElementById('specialIcon').textContent = special.icon;
       document.getElementById('specialTitle').textContent = special.name;
-      document.getElementById('specialDesc').textContent = 'Elige que tipo de llanta quieres:';
+      document.getElementById('specialDesc').textContent = 'Sumás 1 llanta del tipo que elijas. ¿Cuál querés?';
 
       const buttons = document.getElementById('specialButtons');
-      buttons.innerHTML = `
-        <button class="choice-btn aiqar" onclick="applyComodin('aiqar')"><img src="/aiqar-tire.png" style="width:48px;height:48px;object-fit:contain;vertical-align:middle;"> AIQAR</button>
-        <button class="choice-btn byd" onclick="applyComodin('byd')"><img src="/byd-tire.png" style="width:48px;height:48px;object-fit:contain;vertical-align:middle;"> BYD</button>
+      buttons.innerHTML = renderActivePlayerHeader() + `
+        <div class="targets-grid">
+          <button class="choice-btn tire-choice aiqar" onclick="applyComodin('aiqar')">
+            <img src="/aiqar-tire.png" width="48" height="48" style="width:48px;height:48px;object-fit:contain;flex-shrink:0;"> AIQAR<br><small>(+1 llanta AIQAR)</small>
+          </button>
+          <button class="choice-btn tire-choice byd" onclick="applyComodin('byd')">
+            <img src="/byd-tire.png" width="48" height="48" style="width:48px;height:48px;object-fit:contain;flex-shrink:0;"> BYD<br><small>(+1 llanta BYD)</small>
+          </button>
+        </div>
       `;
 
       modal.classList.add('active');
@@ -2398,24 +3054,13 @@ const title = "Juego de Llantas - Gana un Auto!";
         return;
       }
 
-      // Mostrar modal para elegir con quién intercambiar
-      const modal = document.getElementById('specialModal');
-      document.getElementById('specialIcon').textContent = special.icon;
-      document.getElementById('specialTitle').textContent = special.name;
-      document.getElementById('specialDesc').textContent = 'Elige con quien intercambiar:';
-
-      const buttons = document.getElementById('specialButtons');
-      buttons.innerHTML = targets.map(t => `
-        <button class="choice-btn" style="background:${t.color};" onclick="applyIntercambio(${t.index})">
-          ${t.name}
-          <span class="player-tires">
-            ${t.aiqar > 0 ? `<img src="/aiqar-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.aiqar}` : ''}
-            ${t.byd > 0 ? `<img src="/byd-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.byd}` : ''}
-          </span>
-        </button>
-      `).join('');
-
-      modal.classList.add('active');
+      openTargetModal({
+        icon: special.icon,
+        title: special.name,
+        desc: 'Vas a cambiar TODAS tus llantas (AIQAR y BYD) por las del jugador que elijas. Elegí con quién intercambiar:',
+        targets,
+        onclickFn: 'applyIntercambio'
+      });
     }
 
     window.applyIntercambio = function(targetIndex) {
@@ -2438,7 +3083,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       checkAiqarWin(player, 'aiqar');
       checkBydWin(player, 'byd');
 
-      showAlert('🔀', 'INTERCAMBIO', `Intercambiaste llantas con ${targetPlayer.name}!`, () => {
+      showAlert('🔀', 'INTERCAMBIO', `${player.name} cambió todas sus llantas con ${targetPlayer.name}.`, () => {
         if (!gameState.gameOver) nextTurn();
       });
     };
@@ -2451,22 +3096,25 @@ const title = "Juego de Llantas - Gana un Auto!";
         return;
       }
 
-      // Mostrar modal para elegir a quién copiar
+      openTargetModal({
+        icon: special.icon,
+        title: special.name,
+        desc: 'Tus llantas se reemplazan por las del jugador que elijas (te quedás con la misma cantidad que él). Elegí a quién copiar:',
+        targets,
+        onclickFn: 'applyEspejo'
+      });
+    }
+
+    function openTargetModal({ icon, title, desc, targets, onclickFn }) {
       const modal = document.getElementById('specialModal');
-      document.getElementById('specialIcon').textContent = special.icon;
-      document.getElementById('specialTitle').textContent = special.name;
-      document.getElementById('specialDesc').textContent = 'Elige a quien copiar:';
+      document.getElementById('specialIcon').textContent = icon;
+      document.getElementById('specialTitle').textContent = title;
+      document.getElementById('specialDesc').textContent = desc;
 
       const buttons = document.getElementById('specialButtons');
-      buttons.innerHTML = targets.map(t => `
-        <button class="choice-btn" style="background:${t.color};" onclick="applyEspejo(${t.index})">
-          ${t.name}
-          <span class="player-tires">
-            ${t.aiqar > 0 ? `<img src="/aiqar-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.aiqar}` : ''}
-            ${t.byd > 0 ? `<img src="/byd-tire.png" style="width:26px;height:26px;object-fit:contain;vertical-align:middle;"> ${t.byd}` : ''}
-          </span>
-        </button>
-      `).join('');
+      const headerHtml = renderActivePlayerHeader();
+      const targetsHtml = targets.map(t => renderTargetButton(t, `onclick="${onclickFn}(${t.index})"`)).join('');
+      buttons.innerHTML = headerHtml + '<div class="targets-grid">' + targetsHtml + '</div>';
 
       modal.classList.add('active');
     }
@@ -2485,7 +3133,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       checkAiqarWin(player, 'aiqar');
       checkBydWin(player, 'byd');
 
-      showAlert('🪞', 'ESPEJO', `Copiaste las llantas de ${targetPlayer.name}!`, () => {
+      showAlert('🪞', 'ESPEJO', `${player.name} copió las llantas de ${targetPlayer.name} (ahora tiene las mismas cantidades).`, () => {
         if (!gameState.gameOver) nextTurn();
       });
     };
@@ -2499,7 +3147,7 @@ const title = "Juego de Llantas - Gana un Auto!";
       const isCarWin = typeof icon === 'string' && icon.startsWith('/') && icon.includes('-car.png');
 
       if (typeof icon === 'string' && icon.startsWith('/')) {
-        alertIcon.innerHTML = `<img src="${icon}" alt="" style="width:200px;height:200px;object-fit:contain;">`;
+        alertIcon.innerHTML = `<img src="${icon}" alt="" style="width:min(180px, 40vmin);height:auto;max-height:min(180px, 40vmin);object-fit:contain;display:block;margin:0 auto;">`;
       } else {
         alertIcon.textContent = icon;
       }
@@ -2534,6 +3182,103 @@ const title = "Juego de Llantas - Gana un Auto!";
       }
       document.body.appendChild(container);
       setTimeout(() => container.remove(), 4500);
+    }
+
+    function launchStars(tint) {
+      const container = document.createElement('div');
+      container.className = 'fx-container';
+      const count = 60;
+      const colors = tint ? [tint, '#FFD700', '#FFFFFF'] : ['#FFD700', '#FFFFFF', '#FFB81C', '#FFE66D'];
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'fx-star';
+        star.textContent = '⭐';
+        const startLeft = Math.random() * 100;
+        const startTop = Math.random() * 60;
+        const drift = (Math.random() - 0.5) * 40;
+        const size = 0.8 + Math.random() * 1.6;
+        const dur = 1.4 + Math.random() * 1.4;
+        const delay = Math.random() * 0.5;
+        star.style.left = startLeft + '%';
+        star.style.top = startTop + '%';
+        star.style.fontSize = size + 'rem';
+        star.style.color = colors[i % colors.length];
+        star.style.setProperty('--drift', drift + 'vw');
+        star.style.animationDuration = dur + 's';
+        star.style.animationDelay = delay + 's';
+        container.appendChild(star);
+      }
+      document.body.appendChild(container);
+      setTimeout(() => container.remove(), 3500);
+    }
+
+    function launchCarsWarning(carType, playerName) {
+      const container = document.createElement('div');
+      container.className = 'fx-container fx-cars';
+      const carSrc = carType === 'aiqar' ? '/aiqar-car.png' : '/byd-car.png';
+      const tint = carType === 'aiqar' ? '#00BFFF' : '#FF4500';
+
+      const banner = document.createElement('div');
+      banner.className = 'fx-warning-banner';
+      banner.style.color = tint;
+      banner.style.borderColor = tint;
+      banner.style.boxShadow = `0 0 30px ${tint}, inset 0 0 16px ${tint}80`;
+      banner.innerHTML = `<span class="fx-warning-icon">⚠️</span>
+        <span class="fx-warning-text">¡${playerName} está a 1 llanta ${carType.toUpperCase()} de ganar!</span>
+        <span class="fx-warning-icon">⚠️</span>`;
+      container.appendChild(banner);
+
+      const count = 10;
+      for (let i = 0; i < count; i++) {
+        const car = document.createElement('img');
+        car.className = 'fx-car';
+        car.src = carSrc;
+        const fromLeft = Math.random() > 0.5;
+        const topPct = 10 + Math.random() * 75;
+        const dur = 2.2 + Math.random() * 1.8;
+        const delay = Math.random() * 1.5;
+        const scale = 0.7 + Math.random() * 1.1;
+        car.style.top = topPct + '%';
+        car.style.animationDuration = dur + 's';
+        car.style.animationDelay = delay + 's';
+        car.style.setProperty('--car-scale', scale);
+        if (fromLeft) {
+          car.classList.add('fx-car-ltr');
+        } else {
+          car.classList.add('fx-car-rtl');
+        }
+        container.appendChild(car);
+      }
+
+      document.body.appendChild(container);
+      setTimeout(() => container.remove(), 5800);
+    }
+
+    function celebrateTireFound(itemType, player) {
+      const isAiqar = itemType === 'aiqar' || itemType === 'key-aiqar';
+      const isByd = itemType === 'byd' || itemType === 'key-byd';
+      if (!isAiqar && !isByd) return;
+
+      const type = isAiqar ? 'aiqar' : 'byd';
+      const tint = isAiqar ? '#00BFFF' : '#FF4500';
+
+      let aboutToWin = false;
+      if (gameState.mode === 'coleccion') {
+        const found = isAiqar ? gameState.aiqarPiecesFound : gameState.bydPiecesFound;
+        const winner = isAiqar ? gameState.aiqarWinner : gameState.bydWinner;
+        // 4 piezas encontradas y nadie ganó aún → la próxima gana
+        aboutToWin = found === 4 && winner === null;
+      } else {
+        const winner = isAiqar ? gameState.aiqarWinner : gameState.bydWinner;
+        // jugador llegó a 3, le falta 1
+        aboutToWin = player[type] === 3 && winner === null;
+      }
+
+      if (aboutToWin) {
+        launchCarsWarning(type, player.name);
+      } else {
+        launchStars(tint);
+      }
     }
 
     function closeAlertAndContinue() {
@@ -2610,18 +3355,29 @@ const title = "Juego de Llantas - Gana un Auto!";
     function nextTurn() {
       if (gameState.gameOver) return;
 
-      gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
+      const total = gameState.players.length;
 
-      // Saltar si esta bloqueado
-      if (gameState.skipNextPlayer) {
-        gameState.skipNextPlayer = false;
-        showAlert('🚫', 'TURNO PERDIDO', `${gameState.players[gameState.currentPlayer].name} pierde su turno!`);
-        gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
+      // Si todos están protegidos (ya ganaron), no avanzamos
+      if (gameState.players.every(p => p.protected)) return;
+
+      gameState.currentPlayer = (gameState.currentPlayer + 1) % total;
+
+      // Saltar a jugadores que ya ganaron antes de aplicar cualquier bloqueo
+      let safety = total;
+      while (gameState.players[gameState.currentPlayer].protected && safety-- > 0) {
+        gameState.currentPlayer = (gameState.currentPlayer + 1) % total;
       }
 
-      // Saltar jugadores que ya ganaron
-      while (gameState.players[gameState.currentPlayer].protected) {
-        gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
+      // Aplicar bloqueo sobre el próximo jugador activo (que aún no ganó)
+      if (gameState.skipNextPlayer) {
+        gameState.skipNextPlayer = false;
+        const skipped = gameState.players[gameState.currentPlayer];
+        showAlert('🚫', 'TURNO PERDIDO', `${skipped.name} pierde su turno!`);
+        gameState.currentPlayer = (gameState.currentPlayer + 1) % total;
+        safety = total;
+        while (gameState.players[gameState.currentPlayer].protected && safety-- > 0) {
+          gameState.currentPlayer = (gameState.currentPlayer + 1) % total;
+        }
       }
 
       updateCurrentPlayer();
@@ -2641,48 +3397,107 @@ const title = "Juego de Llantas - Gana un Auto!";
       board.style.boxShadow = `0 0 30px ${player.color}80`;
     }
 
+    const prevPlayerStats = new Map();
+
     function renderPlayers() {
       const panel = document.getElementById('playersPanel');
-      panel.innerHTML = '';
+      const needsBuild = panel.children.length !== gameState.players.length;
+
+      if (needsBuild) {
+        panel.innerHTML = '';
+        prevPlayerStats.clear();
+        gameState.players.forEach((player, i) => {
+          const card = document.createElement('div');
+          card.className = 'player-card';
+          card.dataset.idx = String(i);
+          const safeName = (player.name || `Jugador ${player.number}`).replace(/</g, '&lt;');
+          card.innerHTML = `
+            <div class="player-number" style="background:${player.color};">${player.number}</div>
+            <div class="player-info">
+              <div class="player-name" title="${safeName}">${safeName}</div>
+              <div class="player-stats">
+                <div class="stat-row aiqar-row" data-stat="aiqar">
+                  <img src="/aiqar-tire.png" width="20" height="20" style="width:20px;height:20px;flex-shrink:0;object-fit:contain;">
+                  <span class="stat-num">${player.aiqar}</span>
+                </div>
+                <div class="stat-row byd-row" data-stat="byd">
+                  <img src="/byd-tire.png" width="20" height="20" style="width:20px;height:20px;flex-shrink:0;object-fit:contain;">
+                  <span class="stat-num">${player.byd}</span>
+                </div>
+              </div>
+            </div>
+            <div class="player-prize-slot"></div>
+          `;
+          panel.appendChild(card);
+        });
+      }
 
       gameState.players.forEach((player, i) => {
-        const card = document.createElement('div');
+        const card = panel.children[i];
+        if (!card) return;
+
         let cardClass = 'player-card';
         const isActive = i === gameState.currentPlayer && !player.protected;
         if (isActive) cardClass += ' active';
         if (player.prize === 'AIQAR') cardClass += ' winner-aiqar';
         else if (player.prize === 'BYD') cardClass += ' winner-byd';
         else if (player.prize) cardClass += ' winner-vale';
-
         card.className = cardClass;
 
-        // Si es el jugador activo, aplicar su color al borde y fondo
         if (isActive) {
-          card.style.borderLeft = `4px solid ${player.color}`;
-          card.style.background = `${player.color}40`; // 40 = 25% opacity
-          card.style.boxShadow = `inset 0 0 15px ${player.color}60`;
+          card.style.borderLeftColor = player.color;
+          card.style.borderLeftWidth = '6px';
+          card.style.background = `linear-gradient(90deg, ${player.color}66, ${player.color}1a 70%, rgba(0,0,0,0.25))`;
+          card.style.boxShadow = `0 0 0 2px ${player.color}cc, 0 0 18px ${player.color}80, inset 0 0 14px ${player.color}33`;
+          card.style.color = player.color;
+          card.style.transform = 'translateX(4px) scale(1.02)';
+          card.style.zIndex = '2';
+        } else {
+          card.style.borderLeftColor = '';
+          card.style.borderLeftWidth = '';
+          card.style.background = '';
+          card.style.boxShadow = '';
+          card.style.color = '';
+          card.style.transform = '';
+          card.style.zIndex = '';
         }
 
-        const safeName = (player.name || `Jugador ${player.number}`).replace(/</g, '&lt;');
-        card.innerHTML = `
-          <div class="player-number" style="background:${player.color};">${player.number}</div>
-          <div class="player-info">
-            <div class="player-name" title="${safeName}">${safeName}</div>
-            <div class="player-stats">
-              <div class="stat-row aiqar-row">
-                <img src="/aiqar-tire.png" style="width:20px;height:20px;object-fit:contain;">
-                <span class="stat-num">${player.aiqar}</span>
-              </div>
-              <div class="stat-row byd-row">
-                <img src="/byd-tire.png" style="width:20px;height:20px;object-fit:contain;">
-                <span class="stat-num">${player.byd}</span>
-              </div>
-            </div>
-          </div>
-          ${player.prize === 'AIQAR' ? `<img src="/aiqar-car.png" alt="AIQAR" style="width:32px;height:24px;object-fit:contain;">` : player.prize === 'BYD' ? `<img src="/byd-car.png" alt="BYD" style="width:32px;height:24px;object-fit:contain;">` : player.prize ? `<span style="font-size:0.4rem;">🏆</span>` : ''}
-        `;
-        panel.appendChild(card);
+        const prev = prevPlayerStats.get(i) || { aiqar: player.aiqar, byd: player.byd };
+
+        const aiqarRow = card.querySelector('.stat-row.aiqar-row');
+        const bydRow = card.querySelector('.stat-row.byd-row');
+        const aiqarNum = aiqarRow.querySelector('.stat-num');
+        const bydNum = bydRow.querySelector('.stat-num');
+
+        if (aiqarNum.textContent !== String(player.aiqar)) {
+          aiqarNum.textContent = player.aiqar;
+          if (!needsBuild && player.aiqar > prev.aiqar) bumpStat(aiqarRow);
+        }
+        if (bydNum.textContent !== String(player.byd)) {
+          bydNum.textContent = player.byd;
+          if (!needsBuild && player.byd > prev.byd) bumpStat(bydRow);
+        }
+
+        prevPlayerStats.set(i, { aiqar: player.aiqar, byd: player.byd });
+
+        const prizeSlot = card.querySelector('.player-prize-slot');
+        if (player.prize === 'AIQAR') {
+          prizeSlot.innerHTML = `<img src="/aiqar-car.png" alt="AIQAR" class="prize-car">`;
+        } else if (player.prize === 'BYD') {
+          prizeSlot.innerHTML = `<img src="/byd-car.png" alt="BYD" class="prize-car">`;
+        } else if (player.prize) {
+          prizeSlot.innerHTML = `<span class="prize-trophy">🏆</span>`;
+        } else {
+          prizeSlot.innerHTML = '';
+        }
       });
+    }
+
+    function bumpStat(row) {
+      row.classList.remove('bump');
+      void row.offsetWidth;
+      row.classList.add('bump');
+      setTimeout(() => row.classList.remove('bump'), 600);
     }
 
     // Estado para saber si el tablero está revelado
