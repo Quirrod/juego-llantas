@@ -41,11 +41,15 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .container {
-      max-width: 800px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 0.5rem;
+      padding: 1rem;
       height: 100%;
       overflow-y: auto;
+    }
+
+    @media (min-width: 1600px) {
+      .container { max-width: 1400px; }
     }
 
     .container.fullscreen {
@@ -67,9 +71,10 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     h1 {
-      font-size: clamp(0.6rem, 2.5vw, 1rem);
+      font-size: clamp(1rem, 2.5vw, 1.8rem);
       color: var(--breick-yellow);
       text-shadow: 3px 3px 0px var(--breick-purple-dark);
+      letter-spacing: 2px;
     }
 
     .setup-panel {
@@ -89,9 +94,10 @@ const title = "Juego de Llantas - Gana un Auto!";
     .setup-title {
       text-align: center;
       color: var(--breick-yellow);
-      font-size: 0.7rem;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 0px var(--breick-purple-dark);
+      font-size: 1.4rem;
+      margin-bottom: 1.4rem;
+      letter-spacing: 2px;
+      text-shadow: 3px 3px 0px var(--breick-purple-dark);
       animation: titleGlow 2.5s ease-in-out infinite;
     }
 
@@ -103,13 +109,14 @@ const title = "Juego de Llantas - Gana un Auto!";
     .mode-selector {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.7rem;
+      margin-bottom: 1.4rem;
     }
 
     .mode-btn {
-      padding: 0.8rem;
+      padding: 1.1rem 1.2rem;
       border: 4px solid var(--breick-purple-light);
+      border-radius: 8px;
       background: var(--breick-purple-dark);
       color: #fff;
       cursor: pointer;
@@ -137,14 +144,15 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .mode-btn h3 {
       color: var(--breick-yellow);
-      font-size: 0.6rem;
-      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+      margin-bottom: 0.6rem;
+      letter-spacing: 1px;
     }
 
     .mode-btn p {
-      font-size: 0.45rem;
-      opacity: 0.8;
-      line-height: 1.4;
+      font-size: 0.85rem;
+      opacity: 0.9;
+      line-height: 1.55;
     }
 
     .setup-row {
@@ -191,8 +199,8 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .prizes-preview h4 {
       color: var(--breick-yellow);
-      font-size: 0.55rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
       text-align: center;
       letter-spacing: 2px;
       text-shadow: 2px 2px 0 var(--breick-purple-dark);
@@ -212,16 +220,16 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .prize-item {
       position: relative;
-      padding: 0.6rem 0.4rem 0.5rem;
+      padding: 0.85rem 0.55rem 0.7rem;
       border: 3px solid;
-      font-size: 0.38rem;
+      font-size: 0.7rem;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
-      gap: 0.4rem;
-      min-height: 110px;
+      gap: 0.5rem;
+      min-height: 140px;
       background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%);
       box-shadow: 0 4px 0 rgba(0,0,0,0.4), inset 0 0 20px rgba(255,255,255,0.05);
       transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
@@ -273,8 +281,8 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .prize-item .prize-car {
       width: 100%;
-      max-width: 110px;
-      height: 70px;
+      max-width: 130px;
+      height: 88px;
       object-fit: contain;
       filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
       animation: prizeFloat 3s ease-in-out infinite;
@@ -285,7 +293,7 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .prize-item .prize-money {
-      font-size: 1.6rem;
+      font-size: 2.2rem;
       line-height: 1;
       filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5));
       animation: prizeFloat 3s ease-in-out infinite;
@@ -297,10 +305,11 @@ const title = "Juego de Llantas - Gana un Auto!";
       text-shadow: 1px 1px 0 #000;
       position: relative;
       z-index: 1;
+      font-size: 0.95rem;
     }
 
     .prize-item .prize-amount {
-      font-size: 0.55rem;
+      font-size: 0.85rem;
       color: var(--breick-yellow);
       text-shadow: 1px 1px 0 #000;
       position: relative;
@@ -309,13 +318,13 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .prize-item .prize-rank {
       position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 18px;
-      height: 18px;
+      top: 6px;
+      left: 6px;
+      width: 28px;
+      height: 28px;
       background: var(--breick-yellow);
       color: var(--breick-purple-dark);
-      font-size: 0.45rem;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -340,8 +349,8 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .players-preview h4 {
       color: var(--breick-yellow);
-      font-size: 0.55rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
       text-align: center;
       letter-spacing: 2px;
       text-shadow: 2px 2px 0 var(--breick-purple-dark);
@@ -400,16 +409,16 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .name-item .name-badge {
-      width: 40px;
-      height: 40px;
+      width: 52px;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.85rem;
+      font-size: 1.15rem;
       font-weight: bold;
       color: #000;
       border: 3px solid #000;
-      border-radius: 8px;
+      border-radius: 10px;
       box-shadow: 0 3px 0 rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
       transition: transform 0.3s cubic-bezier(.4,0,.2,1.4);
     }
@@ -420,14 +429,14 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .name-item input {
       width: 100%;
-      padding: 0.5rem 0.3rem;
+      padding: 0.65rem 0.35rem;
       border: 2px solid var(--breick-purple-light);
       background: var(--breick-purple-dark);
       color: #fff;
       font-family: 'Press Start 2P', cursive;
-      font-size: 0.5rem;
+      font-size: 0.75rem;
       text-align: center;
-      border-radius: 4px;
+      border-radius: 6px;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
@@ -443,13 +452,13 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .btn-start {
       width: 100%;
-      padding: 1.1rem;
+      padding: 1.4rem;
       background: linear-gradient(180deg, var(--breick-yellow) 0%, var(--breick-yellow-dark) 100%);
       border: 4px solid var(--breick-purple);
       color: var(--breick-purple-dark);
       font-family: 'Press Start 2P', cursive;
-      font-size: 0.75rem;
-      letter-spacing: 1px;
+      font-size: 1.25rem;
+      letter-spacing: 2px;
       cursor: pointer;
       transition: transform 0.15s cubic-bezier(.4,0,.2,1), box-shadow 0.15s ease, background 0.15s ease;
       box-shadow: 0 4px 0 var(--breick-purple-dark), 0 0 0 0 rgba(255,184,28,0);
@@ -506,13 +515,17 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .game-sidebar {
-      width: 200px;
-      min-width: 200px;
+      width: 260px;
+      min-width: 260px;
       background: linear-gradient(180deg, var(--breick-purple) 0%, var(--breick-purple-dark) 100%);
       border-right: 3px solid var(--breick-yellow);
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+    }
+
+    @media (min-width: 1600px) {
+      .game-sidebar { width: 320px; min-width: 320px; }
     }
 
     .sidebar-header {
@@ -532,9 +545,9 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .sidebar-buttons .btn-reveal,
     .sidebar-buttons .btn-restart {
-      padding: 0.45rem 0.55rem;
-      font-size: 0.75rem;
-      border-radius: 6px;
+      padding: 0.7rem 0.85rem;
+      font-size: 1.25rem;
+      border-radius: 7px;
       border-left: none;
       line-height: 1;
     }
@@ -549,9 +562,10 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .players-list .player-card {
       flex: 0 0 auto;
-      flex-direction: row;
+      flex-direction: column;
+      align-items: stretch;
       justify-content: flex-start;
-      padding: 0.6rem 0.65rem;
+      padding: 0.6rem 0.7rem;
       border-radius: 8px;
       border-left: 4px solid var(--breick-purple-light);
       border-bottom: none;
@@ -559,7 +573,31 @@ const title = "Juego de Llantas - Gana un Auto!";
       background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.3));
       box-shadow: 0 2px 0 rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
       animation: cardSlideIn 0.4s cubic-bezier(.2,.9,.3,1.1) backwards;
-      gap: 0.65rem;
+      gap: 0.5rem;
+    }
+
+    .players-list .player-name {
+      font-size: 1.05rem;
+      width: 100%;
+      max-width: 100%;
+      white-space: normal;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      text-overflow: clip;
+      overflow: visible;
+      text-align: left;
+      line-height: 1.15;
+    }
+
+    .player-card-bottom {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .player-card-bottom .player-stats {
+      flex: 1;
     }
 
     .players-list .player-card:hover {
@@ -596,18 +634,19 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .coords-top .coord-cell {
-      width: calc((min(calc(100vw - 240px), calc(100vh - 60px)) - 20px) / 10);
-      height: 20px;
+      width: calc((min(calc(100vw - 300px), calc(100vh - 60px)) - 28px) / 10);
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       color: var(--breick-yellow);
       font-weight: bold;
+      text-shadow: 2px 2px 0 var(--breick-purple-dark);
     }
 
     .coords-top .coord-cell:first-child {
-      width: 20px;
+      width: 28px;
     }
 
     .board-with-rows {
@@ -618,17 +657,19 @@ const title = "Juego de Llantas - Gana un Auto!";
       display: flex;
       flex-direction: column;
       margin-right: 2px;
+      width: 28px;
     }
 
     .coords-left .coord-cell {
-      width: 20px;
-      height: calc((min(calc(100vw - 240px), calc(100vh - 60px)) - 20px) / 10);
+      width: 28px;
+      height: calc((min(calc(100vw - 300px), calc(100vh - 60px)) - 28px) / 10);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       color: var(--breick-yellow);
       font-weight: bold;
+      text-shadow: 2px 2px 0 var(--breick-purple-dark);
     }
 
     .game-header {
@@ -652,17 +693,17 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .current-player-num {
-      width: 36px;
-      height: 36px;
+      width: 58px;
+      height: 58px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
+      font-size: 1.7rem;
       font-weight: bold;
       color: #000;
-      border-radius: 8px;
+      border-radius: 12px;
       animation: pulseBadge 1s ease-in-out infinite;
-      box-shadow: 0 0 12px rgba(255,184,28,0.6);
+      box-shadow: 0 0 14px rgba(255,184,28,0.6);
     }
 
     @keyframes pulseBadge {
@@ -671,7 +712,7 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .turn-arrow {
-      font-size: 1.1rem;
+      font-size: 1.9rem;
       animation: bounce-arrow 0.9s cubic-bezier(.5,0,.5,1) infinite;
       color: var(--breick-yellow);
       filter: drop-shadow(0 0 4px rgba(255,184,28,0.7));
@@ -741,10 +782,10 @@ const title = "Juego de Llantas - Gana un Auto!";
     .progress-item {
       display: flex;
       align-items: center;
-      gap: 5px;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 0.55rem;
+      gap: 9px;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 1.05rem;
       font-weight: bold;
       box-shadow: 0 2px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
       transition: transform 0.2s ease;
@@ -856,16 +897,16 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .player-number {
-      font-size: 0.7rem;
-      width: 26px;
-      height: 26px;
-      min-width: 26px;
+      font-size: 1.3rem;
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #000;
       font-weight: bold;
-      border-radius: 6px;
+      border-radius: 9px;
       border: 2px solid rgba(0,0,0,0.35);
       box-shadow: 0 2px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
       transition: transform 0.2s ease;
@@ -890,9 +931,9 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .player-name {
-      font-size: 0.5rem;
+      font-size: 1.05rem;
       color: var(--breick-yellow);
-      text-shadow: 1px 1px 0 #000;
+      text-shadow: 2px 2px 0 #000;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -910,10 +951,10 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .player-stats img {
-      width: 18px !important;
-      height: 18px !important;
-      max-width: 18px !important;
-      max-height: 18px !important;
+      width: 36px !important;
+      height: 36px !important;
+      max-width: 36px !important;
+      max-height: 36px !important;
       object-fit: contain;
       transition: transform 0.2s ease;
     }
@@ -921,8 +962,8 @@ const title = "Juego de Llantas - Gana un Auto!";
     .stat-row {
       display: flex;
       align-items: center;
-      gap: 4px;
-      font-size: 0.6rem;
+      gap: 8px;
+      font-size: 1.3rem;
       font-weight: bold;
       line-height: 1;
     }
@@ -1038,16 +1079,16 @@ const title = "Juego de Llantas - Gana un Auto!";
     .alert-box {
       display: none;
       position: fixed;
-      top: 60px;
+      top: 70px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 0.5rem 1rem;
+      padding: 0.8rem 1.3rem;
       border: 3px solid var(--breick-yellow);
       text-align: center;
-      font-size: 0.45rem;
+      font-size: 0.9rem;
       background: var(--breick-purple-dark);
       z-index: 500;
-      border-radius: 6px;
+      border-radius: 8px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
       max-width: 90%;
     }
@@ -1075,8 +1116,8 @@ const title = "Juego de Llantas - Gana un Auto!";
       padding: 6px;
       border: 4px solid var(--breick-yellow);
       box-shadow: 0 0 30px rgba(255, 184, 28, 0.4);
-      width: min(calc(100vw - 240px), calc(100vh - 60px));
-      height: min(calc(100vw - 240px), calc(100vh - 60px));
+      width: min(calc(100vw - 300px), calc(100vh - 60px));
+      height: min(calc(100vw - 300px), calc(100vh - 60px));
       max-width: calc(100vh - 60px);
       max-height: calc(100vh - 60px);
     }
@@ -1107,9 +1148,9 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .cell .cell-q {
-      font-size: clamp(16px, 5vw, 32px);
+      font-size: clamp(24px, 5vw, 56px);
       color: #FFD700;
-      text-shadow: 0 0 10px #FFB81C, 2px 2px 0 #4A1F56;
+      text-shadow: 0 0 14px #FFB81C, 3px 3px 0 #4A1F56;
       font-weight: bold;
       display: flex;
       align-items: center;
@@ -1486,9 +1527,9 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .modal h2 {
-      font-size: 0.8rem;
+      font-size: 1.3rem;
       color: var(--breick-yellow);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       text-shadow: 3px 3px 0px var(--breick-purple-dark);
     }
 
@@ -1499,12 +1540,12 @@ const title = "Juego de Llantas - Gana un Auto!";
     .result-item {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      padding: 0.55rem 0.6rem;
-      margin-bottom: 0.4rem;
+      gap: 0.5rem;
+      padding: 0.8rem 0.9rem;
+      margin-bottom: 0.6rem;
       border: 4px solid;
-      border-radius: 8px;
-      font-size: 0.4rem;
+      border-radius: 10px;
+      font-size: 0.7rem;
     }
 
     .result-row-top {
@@ -1525,12 +1566,12 @@ const title = "Juego de Llantas - Gana un Auto!";
     .result-stat {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 3px 8px;
+      gap: 7px;
+      padding: 5px 11px;
       background: rgba(0,0,0,0.4);
-      border-radius: 6px;
+      border-radius: 8px;
       font-family: 'Press Start 2P', cursive;
-      font-size: 0.55rem;
+      font-size: 0.85rem;
       color: #fff;
       text-shadow: 1px 1px 0 #000;
     }
@@ -1552,28 +1593,35 @@ const title = "Juego de Llantas - Gana un Auto!";
     }
 
     .result-position {
-      font-size: 0.6rem;
+      font-size: 0.95rem;
     }
 
     .result-name {
-      font-size: 0.5rem;
+      font-size: 0.85rem;
       color: #fff;
       text-shadow: 1px 1px 0 #000;
     }
 
     .result-prize {
-      font-size: 0.5rem;
+      font-size: 0.85rem;
       color: var(--breick-yellow);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .result-color {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
       text-align: center;
       color: #000;
       font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.4);
     }
 
     .special-modal {
@@ -1582,14 +1630,14 @@ const title = "Juego de Llantas - Gana un Auto!";
 
     .special-modal h3 {
       color: var(--breick-yellow);
-      font-size: 0.6rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      margin-bottom: 0.7rem;
     }
 
     .special-modal p {
-      font-size: 1.5rem;
+      font-size: 1.05rem;
       margin-bottom: 1rem;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .special-icon {
@@ -2803,9 +2851,9 @@ const title = "Juego de Llantas - Gana un Auto!";
         div.className = `result-item pos-${i + 1}`;
         let prizeHtml = '';
         if (player.prize === 'AIQAR') {
-          prizeHtml = `<img src="/aiqar-car.png" alt="AIQAR" style="width:60px;height:42px;object-fit:contain;vertical-align:middle;"> AIQAR`;
+          prizeHtml = `<img src="/aiqar-car.png" alt="AIQAR" style="width:80px;height:56px;object-fit:contain;vertical-align:middle;"> AIQAR`;
         } else if (player.prize === 'BYD') {
-          prizeHtml = `<img src="/byd-car.png" alt="BYD" style="width:60px;height:42px;object-fit:contain;vertical-align:middle;"> BYD`;
+          prizeHtml = `<img src="/byd-car.png" alt="BYD" style="width:80px;height:56px;object-fit:contain;vertical-align:middle;"> BYD`;
         } else {
           prizeHtml = `💵 ${player.prize}`;
         }
@@ -2823,10 +2871,10 @@ const title = "Juego de Llantas - Gana un Auto!";
           </div>
           <div class="result-stats">
             <span class="result-stat" title="Llantas AIQAR encontradas">
-              <img src="/aiqar-tire.png" width="22" height="22" style="width:22px;height:22px;object-fit:contain;flex-shrink:0;"> ${player.aiqar}
+              <img src="/aiqar-tire.png" width="28" height="28" style="width:28px;height:28px;object-fit:contain;flex-shrink:0;"> ${player.aiqar}
             </span>
             <span class="result-stat" title="Llantas BYD encontradas">
-              <img src="/byd-tire.png" width="22" height="22" style="width:22px;height:22px;object-fit:contain;flex-shrink:0;"> ${player.byd}
+              <img src="/byd-tire.png" width="28" height="28" style="width:28px;height:28px;object-fit:contain;flex-shrink:0;"> ${player.byd}
             </span>
             <span class="result-stat result-stat-cells" title="Casillas reveladas">
               🎯 ${cellsRevealed}
@@ -3309,7 +3357,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         const bydWarning = gameState.bydPiecesFound === 4 && !bydWon;
 
         html += `<div class="progress-item aiqar-prog ${aiqarWon ? 'winner' : ''} ${aiqarWarning ? 'warning' : ''}">`;
-        html += `<img src="/aiqar-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> `;
+        html += `<img src="/aiqar-tire.png" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;"> `;
         if (aiqarWon) {
           html += `🏆 ${gameState.players[gameState.aiqarWinner].name}`;
         } else {
@@ -3318,7 +3366,7 @@ const title = "Juego de Llantas - Gana un Auto!";
         html += `</div>`;
 
         html += `<div class="progress-item byd-prog ${bydWon ? 'winner' : ''} ${bydWarning ? 'warning' : ''}">`;
-        html += `<img src="/byd-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> `;
+        html += `<img src="/byd-tire.png" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;"> `;
         if (bydWon) {
           html += `🏆 ${gameState.players[gameState.bydWinner].name}`;
         } else {
@@ -3329,22 +3377,22 @@ const title = "Juego de Llantas - Gana un Auto!";
         // Modo 2 y 3: Solo mostrar cuando alguien está cerca (3/4) o ganó
         // AIQAR
         if (gameState.aiqarWinner !== null) {
-          html += `<div class="progress-item aiqar-prog winner"><img src="/aiqar-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> 🏆 ${gameState.players[gameState.aiqarWinner].name}</div>`;
+          html += `<div class="progress-item aiqar-prog winner"><img src="/aiqar-tire.png" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;"> 🏆 ${gameState.players[gameState.aiqarWinner].name}</div>`;
         } else {
           const maxAiqar = Math.max(...gameState.players.map(p => p.aiqar));
           if (maxAiqar >= 3) {
             const leader = gameState.players.find(p => p.aiqar === maxAiqar);
-            html += `<div class="progress-item aiqar-prog warning"><img src="/aiqar-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> ⚠️ ${leader.name}: ${maxAiqar}/4</div>`;
+            html += `<div class="progress-item aiqar-prog warning"><img src="/aiqar-tire.png" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;"> ⚠️ ${leader.name}: ${maxAiqar}/4</div>`;
           }
         }
         // BYD
         if (gameState.bydWinner !== null) {
-          html += `<div class="progress-item byd-prog winner"><img src="/byd-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> 🏆 ${gameState.players[gameState.bydWinner].name}</div>`;
+          html += `<div class="progress-item byd-prog winner"><img src="/byd-tire.png" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;"> 🏆 ${gameState.players[gameState.bydWinner].name}</div>`;
         } else {
           const maxByd = Math.max(...gameState.players.map(p => p.byd));
           if (maxByd >= 3) {
             const leader = gameState.players.find(p => p.byd === maxByd);
-            html += `<div class="progress-item byd-prog warning"><img src="/byd-tire.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;"> ⚠️ ${leader.name}: ${maxByd}/4</div>`;
+            html += `<div class="progress-item byd-prog warning"><img src="/byd-tire.png" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;"> ⚠️ ${leader.name}: ${maxByd}/4</div>`;
           }
         }
       }
@@ -3412,21 +3460,21 @@ const title = "Juego de Llantas - Gana un Auto!";
           card.dataset.idx = String(i);
           const safeName = (player.name || `Jugador ${player.number}`).replace(/</g, '&lt;');
           card.innerHTML = `
-            <div class="player-number" style="background:${player.color};">${player.number}</div>
-            <div class="player-info">
-              <div class="player-name" title="${safeName}">${safeName}</div>
+            <div class="player-name" title="${safeName}">${safeName}</div>
+            <div class="player-card-bottom">
+              <div class="player-number" style="background:${player.color};">${player.number}</div>
               <div class="player-stats">
                 <div class="stat-row aiqar-row" data-stat="aiqar">
-                  <img src="/aiqar-tire.png" width="20" height="20" style="width:20px;height:20px;flex-shrink:0;object-fit:contain;">
+                  <img src="/aiqar-tire.png" width="36" height="36" style="width:36px;height:36px;flex-shrink:0;object-fit:contain;">
                   <span class="stat-num">${player.aiqar}</span>
                 </div>
                 <div class="stat-row byd-row" data-stat="byd">
-                  <img src="/byd-tire.png" width="20" height="20" style="width:20px;height:20px;flex-shrink:0;object-fit:contain;">
+                  <img src="/byd-tire.png" width="36" height="36" style="width:36px;height:36px;flex-shrink:0;object-fit:contain;">
                   <span class="stat-num">${player.byd}</span>
                 </div>
               </div>
+              <div class="player-prize-slot"></div>
             </div>
-            <div class="player-prize-slot"></div>
           `;
           panel.appendChild(card);
         });
