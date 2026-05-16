@@ -3484,6 +3484,13 @@ const title = "Juego de Llantas - Gana un Auto!";
         const card = panel.children[i];
         if (!card) return;
 
+        const safeName = (player.name || `Jugador ${player.number}`).replace(/</g, '&lt;');
+        const nameEl = card.querySelector('.player-name');
+        if (nameEl && nameEl.innerHTML !== safeName) {
+          nameEl.innerHTML = safeName;
+          nameEl.setAttribute('title', safeName);
+        }
+
         let cardClass = 'player-card';
         const isActive = i === gameState.currentPlayer && !player.protected;
         if (isActive) cardClass += ' active';
@@ -3642,6 +3649,18 @@ const title = "Juego de Llantas - Gana un Auto!";
       document.getElementById('setup').style.display = 'block';
       const revealBtn = document.querySelector('.btn-reveal');
       if (revealBtn) revealBtn.textContent = '👁';
+      const playersPanel = document.getElementById('playersPanel');
+      if (playersPanel) playersPanel.innerHTML = '';
+      const progressPanel = document.getElementById('progressPanel');
+      if (progressPanel) progressPanel.innerHTML = '';
+      prevPlayerStats.clear();
+      gameState.players = [];
+
+      const savedNames = loadSavedNames();
+      document.querySelectorAll('#nameList input[data-player]').forEach((input, i) => {
+        if (savedNames && savedNames[i]) input.value = savedNames[i];
+      });
+
       clearSavedGame();
     };
 
